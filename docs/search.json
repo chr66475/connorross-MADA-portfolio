@@ -7,6 +7,20 @@
     "text": "Hello everyone! My name is Connor Ross and this is my first year at UGA as a MPH student in the epidemiology concentration. I went to the University of South Carolina for my bachelors degree in public health and completed a year of masters work before my partner was deployed. At which time, I worked for the South Carolina Department of Health and Environmental Control in the Division of Acute Disease Epidemiology (where I still work part-time) and for the University of South Carolina Infectious Disease Lab primarily working with COVID-19, vector-borne, and neglected tropical diseases. After my partner returned we moved to his next assignment at Fort Gordon near Augusta and I began the MPH program here. At USC, I was given a very brief introduction to R but we primarily used SAS and some STATA for analysis, however, last semester, I received more R training in the EPID 7500 course. I would like to receive a better understanding of coding and best practices from this course, as my previous training were mainly focus on data analysis and interpretation. Outside of work and academia, I enjoy hiking, camping, kayaking, and reading."
   },
   {
+    "objectID": "aboutme.html#heres-what-i-look-like",
+    "href": "aboutme.html#heres-what-i-look-like",
+    "title": "About me",
+    "section": "Here’s what I look like…",
+    "text": "Here’s what I look like…\n\nPlease feel free to reach out! I’m new here and excited to meet new people."
+  },
+  {
+    "objectID": "aboutme.html#interested-in-research",
+    "href": "aboutme.html#interested-in-research",
+    "title": "About me",
+    "section": "Interested in research?",
+    "text": "Interested in research?\nThis is a article I co-authored on one of the projects I was involved in at USC:\nDeterminants of COVID-19 Vaccination among a State-Wide Year-Long Surveillance Initiative in a Conservative Southern State\nIt’s on a year COVID-19 prevalence and vaccination surveillance study in South Carolina. There were several analysis conducted for this paper including a principal component analysis, survival analysis, and a geospatial temporal analysis. This project is unique in that it provided us funding for primary data collection, and testing using new technology call d-PCR (compared to q-PCR) and even a continuation of this project now called All-IN SC."
+  },
+  {
     "objectID": "coding_exercise.html",
     "href": "coding_exercise.html",
     "title": "R Coding Exercise",
@@ -33,19 +47,5 @@
     "title": "Visualization Exercise",
     "section": "",
     "text": "Placeholder file for the future visualization exercise."
-  },
-  {
-    "objectID": "aboutme.html#heres-what-i-look-like",
-    "href": "aboutme.html#heres-what-i-look-like",
-    "title": "About me",
-    "section": "Here’s what I look like…",
-    "text": "Here’s what I look like…\n\nPlease feel free to reach out! I’m new here and excited to meet new people."
-  },
-  {
-    "objectID": "aboutme.html#interested-in-research",
-    "href": "aboutme.html#interested-in-research",
-    "title": "About me",
-    "section": "Interested in research?",
-    "text": "Interested in research?\nThis is a article I co-authored on one of the projects I was involved in at USC:\nDeterminants of COVID-19 Vaccination among a State-Wide Year-Long Surveillance Initiative in a Conservative Southern State\nIt’s on a year COVID-19 prevalence and vaccination surveillance study in South Carolina. There were several analysis conducted for this paper including a principal component analysis, survival analysis, and a geospatial temporal analysis. This project is unique in that it provided us funding for primary data collection, and testing using new technology call d-PCR (compared to q-PCR) and even a continuation of this project now called All-IN SC."
   }
 ]

@@ -48,4 +48,4 @@ including a principal component analysis, survival analysis, and a
 geospatial temporal analysis. This project is unique in that it provided
 us funding for primary data collection, and testing using new technology
 call d-PCR (compared to q-PCR) and even a continuation of this project
-now called All-IN SC.
+now called [All-IN SC](https://allin-sc.org/).
