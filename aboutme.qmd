@@ -3,6 +3,49 @@ title: "About me"
 output: 
   html_document:
       toc: FALSE
+editor_options: 
+  markdown: 
+    wrap: 72
 ---
 
-Add some text and a figure describing myself.
+Hello everyone! My name is Connor Ross and this is my first year at UGA
+as a MPH student in the epidemiology concentration. I went to the
+University of South Carolina for my bachelors degree in public health
+and completed a year of masters work before my partner was deployed. At
+which time, I worked for the South Carolina Department of Health and
+Environmental Control in the Division of Acute Disease Epidemiology
+(where I still work part-time) and for the University of South Carolina
+Infectious Disease Lab primarily working with COVID-19, vector-borne,
+and neglected tropical diseases. After my partner returned we moved to
+his next assignment at Fort Gordon near Augusta and I began the MPH
+program here. At USC, I was given a very brief introduction to R but we
+primarily used SAS and some STATA for analysis, however, last semester,
+I received more R training in the EPID 7500 course. I would like to
+receive a better understanding of coding and best practices from this
+course, as my previous training were mainly focus on data analysis and
+interpretation. Outside of work and academia, I enjoy hiking, camping,
+kayaking, and reading.
+
+## Here's what I look like...
+
+![](Ross,%20Connor%20DHEC%20ID%201.jpeg)
+
+Please feel free to reach out! I'm new here and excited to meet new
+people.
+
+## Interested in research?
+
+This is a article I co-authored on one of the projects I was involved in
+at USC:
+
+[**Determinants of COVID-19 Vaccination among a State-Wide Year-Long
+Surveillance Initiative in a Conservative Southern
+State**](https://www.mdpi.com/2076-393X/10/3/412?fbclid=IwAR0sOxb6EvRHxqv8IDZk0aeb2fee1pyCRFWHu7Ee6Bv_MDuJIpZ0uygSAXk)
+
+It's on a year COVID-19 prevalence and vaccination surveillance study in
+South Carolina. There were several analysis conducted for this paper
+including a principal component analysis, survival analysis, and a
+geospatial temporal analysis. This project is unique in that it provided
+us funding for primary data collection, and testing using new technology
+call d-PCR (compared to q-PCR) and even a continuation of this project
+now called All-IN SC.
