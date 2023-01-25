@@ -6,3 +6,160 @@ output:
 ---
 
 Placeholder file for the future R coding exercise.
+
+
+
+#Getting Starting
+
+install.packages('dslabs')
+install.packages('tidyverse')
+install.packages('ggplot2')
+
+
+
+
+# Loading and Checking Data
+
+```{r}
+# Load dslabs package
+library("dslabs")
+
+# Look at help file for gapminder data
+help(gapminder)
+
+# Get an overview of data structure
+str(gapminder)
+
+# Get a summary of data
+summary(gapminder)
+
+# Determine the type of object gapminder is
+class(gapminder)
+
+```
+
+
+
+# Processing Data
+
+```{r}
+# Load Tidyverse 
+library(tidyverse)
+
+# New object for African Countries
+africadata <- gapminder %>%
+  filter(continent == 'Africa')
+
+# Check africadata
+str(africadata)
+summary(africadata)
+
+# Create infant_mortality
+inf_mortality <- africadata %>%
+  select(infant_mortality, life_expectancy)
+
+# Check inf_mortality
+str(inf_mortality)
+summary(inf_mortality)
+
+# Create life_expectancy
+lif_expect <- africadata %>%
+  select(life_expectancy, population)
+
+# Check lif_expect
+str(lif_expect)
+summary(lif_expect)
+
+```
+
+
+
+# Plotting
+
+```{r}
+# Install ggplot2
+library(ggplot2)
+
+# Plot life expectancy as a function of inf_mortality
+ggplot(inf_mortality, aes(x = infant_mortality,
+                          y = life_expectancy)) +
+  geom_point() + labs(x = "Infant Mortality (per 1,000 births)",
+                      y = "Life Expectancy (in years)")
+
+# Plot life expectancy as a function of population size
+ggplot(lif_expect, aes(x = log(population),
+                          y = life_expectancy)) +
+  geom_point() + labs(x = "Log Population", y = "Life Expectancy (in years)")
+
+```
+
+
+
+# More data processing
+
+```{r}
+# Find NAs
+subset(africadata,is.na(inf_mortality))
+
+with(subset(africadata, is.na(infant_mortality)), year)
+
+# Filter year with most data
+More <- africadata %>%
+  filter(year == 2000)
+
+# Check
+summary(More)
+str(More)
+
+```
+
+
+
+# More plotting
+
+```{r}
+# Plot life expectancy as a function of inf_mortality
+ggplot(More, aes(x = infant_mortality,
+                 y = life_expectancy)) +
+  geom_point() + labs(x = "Infant Mortality (per 1,000 births)", 
+                      y = "Life Expectany (in years)", 
+                      title = "Infant Mortality and Life Expectancy in Africa 
+                      (Year: 2000)")
+
+# Plot life expectancy as a function of population size
+ggplot(More, aes(x = log(population),
+                          y = life_expectancy)) +
+  geom_point() + labs(x = "Log Population", y = "Life Expectany (in years)", 
+                      title = "Population and Life Expectancy in Africa 
+                      (Year: 2000)")
+
+```
+
+
+
+# Fitting a simple model
+
+```{r}
+# lms
+fit1 <- lm(life_expectancy ~ infant_mortality, data = More)
+fit2 <- lm(life_expectancy ~ population, data = More)
+
+# Results fit1
+summary(fit1)
+
+# Results fit2
+summary(fit2)
+
+```
+
+
+
+# Conclusions
+
+While the data does not show a statistically significant association between 
+life expectancy and population size given our p-value is greater than our alpha 
+level of 0.05 (p = 0.62), there was significant evidence of an association 
+between life expectancy and infant mortality give out p-value is less than our 
+alpha level of 0.05 (p < 0.001). Life expectancy decreases by 2.49 year on
+average for every unit increase in infant mortality.
+
