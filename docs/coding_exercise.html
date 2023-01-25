@@ -204,10 +204,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </header>
 
 <p>Placeholder file for the future R coding exercise.</p>
-<p>#Getting Starting</p>
+<section id="getting-starting" class="level2">
+<h2 class="anchored" data-anchor-id="getting-starting">Getting Starting</h2>
 <p>install.packages(‘dslabs’) install.packages(‘tidyverse’) install.packages(‘ggplot2’)</p>
-<section id="loading-and-checking-data" class="level1">
-<h1>Loading and Checking Data</h1>
+</section>
+<section id="loading-and-checking-data" class="level2">
+<h2 class="anchored" data-anchor-id="loading-and-checking-data">Loading and Checking Data</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load dslabs package</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"dslabs"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -268,8 +270,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 </section>
-<section id="processing-data" class="level1">
-<h1>Processing Data</h1>
+<section id="processing-data" class="level2">
+<h2 class="anchored" data-anchor-id="processing-data">Processing Data</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load Tidyverse </span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -394,8 +396,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 </section>
-<section id="plotting" class="level1">
-<h1>Plotting</h1>
+<section id="plotting" class="level2">
+<h2 class="anchored" data-anchor-id="plotting">Plotting</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Install ggplot2</span></span>
 <span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
@@ -423,8 +425,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 </section>
-<section id="more-data-processing" class="level1">
-<h1>More data processing</h1>
+<section id="more-data-processing" class="level2">
+<h2 class="anchored" data-anchor-id="more-data-processing">More data processing</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Find NAs</span></span>
 <span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="fu">subset</span>(africadata,<span class="fu">is.na</span>(inf_mortality))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -950,8 +952,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 </section>
-<section id="more-plotting" class="level1">
-<h1>More plotting</h1>
+<section id="more-plotting" class="level2">
+<h2 class="anchored" data-anchor-id="more-plotting">More plotting</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot life expectancy as a function of inf_mortality</span></span>
 <span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(More, <span class="fu">aes</span>(<span class="at">x =</span> infant_mortality,</span>
@@ -974,8 +976,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 </section>
-<section id="fitting-a-simple-model" class="level1">
-<h1>Fitting a simple model</h1>
+<section id="fitting-a-simple-model" class="level2">
+<h2 class="anchored" data-anchor-id="fitting-a-simple-model">Fitting a simple model</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="co"># lms</span></span>
 <span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>fit1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(life_expectancy <span class="sc">~</span> infant_mortality, <span class="at">data =</span> More)</span>
@@ -1027,8 +1029,8 @@ F-statistic: 0.2549 on 1 and 49 DF,  p-value: 0.6159</code></pre>
 </div>
 </div>
 </section>
-<section id="conclusions" class="level1">
-<h1>Conclusions</h1>
+<section id="conclusions" class="level2">
+<h2 class="anchored" data-anchor-id="conclusions">Conclusions</h2>
 <p>While the data does not show a statistically significant association between life expectancy and population size given our p-value is greater than our alpha level of 0.05 (p = 0.62), there was significant evidence of an association between life expectancy and infant mortality give out p-value is less than our alpha level of 0.05 (p &lt; 0.001). Life expectancy decreases by 2.49 year on average for every unit increase in infant mortality.</p>
 
 

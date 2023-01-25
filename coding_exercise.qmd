@@ -9,7 +9,7 @@ Placeholder file for the future R coding exercise.
 
 
 
-#Getting Starting
+## Getting Starting
 
 install.packages('dslabs')
 install.packages('tidyverse')
@@ -18,7 +18,7 @@ install.packages('ggplot2')
 
 
 
-# Loading and Checking Data
+## Loading and Checking Data
 
 ```{r}
 # Load dslabs package
@@ -40,7 +40,7 @@ class(gapminder)
 
 
 
-# Processing Data
+## Processing Data
 
 ```{r}
 # Load Tidyverse 
@@ -74,7 +74,7 @@ summary(lif_expect)
 
 
 
-# Plotting
+## Plotting
 
 ```{r}
 # Install ggplot2
@@ -95,7 +95,7 @@ ggplot(lif_expect, aes(x = log(population),
 
 
 
-# More data processing
+## More data processing
 
 ```{r}
 # Find NAs
@@ -115,7 +115,7 @@ str(More)
 
 
 
-# More plotting
+## More plotting
 
 ```{r}
 # Plot life expectancy as a function of inf_mortality
@@ -137,7 +137,7 @@ ggplot(More, aes(x = log(population),
 
 
 
-# Fitting a simple model
+## Fitting a simple model
 
 ```{r}
 # lms
@@ -154,7 +154,7 @@ summary(fit2)
 
 
 
-# Conclusions
+## Conclusions
 
 While the data does not show a statistically significant association between 
 life expectancy and population size given our p-value is greater than our alpha 
