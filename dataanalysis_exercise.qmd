@@ -93,10 +93,10 @@ diseaseincidence %>%
 
 # Disease Frequency in 2022
 diseaseincidence1 %>%
-  ggplot(mapping = aes(x = reorder(Label, -Freq), y = Freq, fill = Label)) + 
+ggplot(mapping = aes(x = reorder(Label, -Freq), y = Freq, fill = Label)) + 
   geom_bar(stat = 'identity') + 
   scale_x_discrete(labels = function(Label) str_wrap(Label, width = 6)) +
-  theme(legend.position = "none") + geom_text(aes(label = Freq), vjust = 0)
+  theme(legend.position = "none") + geom_text(aes(label = Freq), vjust = 0) +
   labs(x = "Disease Frequency", y = "Disease Reported", 
        title = "Frequency of Top Ten Reported Disease in Georgia in NNDSS in 2022")
 
