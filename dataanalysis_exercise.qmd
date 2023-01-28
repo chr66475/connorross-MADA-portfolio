@@ -1,0 +1,114 @@
+---
+title: "dataanalysis_exercise"
+format:
+  html:
+    theme: default
+---
+
+# Data Analysis Exercise (Module 4 Exercise)
+
+
+## Description of Dataset
+
+This data comes from the Centers for Disease Control and Prevention's National
+Notifiable Diseases Surveillance System (NNDSS). Every week the CDC posts 
+data received from the NNDSS system by the 50 states and US territories.
+This data set in particular was posted on 01.26.2023. 
+
+
+
+## Load and clean the data...
+```{r}
+# Load necessary packages...
+library(tidyverse)
+
+# Loading the raw data set.
+RawNNDSS <- readr:: read_csv("data/NNDSS_Weekly_Data.csv")
+
+## Let's take a look...
+summary(RawNNDSS)
+str(RawNNDSS)
+
+## I'm kind of only interested in Georgia since I live here now...
+GeorgiaNNDSS <- RawNNDSS %>%
+  filter(`Reporting Area` == "GEORGIA")
+summary(GeorgiaNNDSS)
+str(GeorgiaNNDSS)
+
+## What diseases DID Georgia from 2022 until now...
+currentweek <- GeorgiaNNDSS %>%
+  filter(`Current MMWR Year` >= 2022 & `Current week` != 'NA')
+
+## Ehhhh let's get rid of 2022 for the sake of clear MMWR weeks...
+currentweek <- GeorgiaNNDSS %>%
+  filter(`Current MMWR Year` == 2022 & `Current week` != 'NA')
+
+## Lets take a look at what diseases were MOST reported...
+diseaseincidence <- currentweek %>%
+  select(Label, `MMWR WEEK`,`Current week`) 
+
+## Closer...
+diseaseincidence1 <- currentweek %>%
+  select(Label, `Current week`)
+
+## Almost there...
+diseaseincidence1 <- diseaseincidence1 %>%
+  group_by(Label) %>%
+  summarise(Freq = sum(`Current week`))
+  
+## Finally top ten have been narrowed down!
+diseaseincidence1 <- diseaseincidence1 %>%
+  arrange(desc(Freq)) %>%
+  head(10)
+
+```
+
+
+
+## I'm a curious guy so I'm going to plot diseases reported over time and a 
+## barplot to see the total burden of disease in Georgia in 2022...
+```{r}
+## You'll need two files for this...
+saveRDS(diseaseincidence, file = "data/disease_incidence_time.rds")
+saveRDS(diseaseincidence1, file = "data/disease_freq.rds")
+
+
+# Load the thingy...
+library(ggplot2)
+
+# Disease incidence over time...
+diseaseincidence %>%
+  ggplot(mapping = aes(x = `MMWR WEEK`, y = `Current week`, color = Label)) +
+  geom_line() + labs(x = "MMWR Week", y = "Incidence of Disease", title = 
+                       "Disease Incidence Over Time (by Epi Week)")
+
+# Wooooo that plot was extremely long, I'm going to remove the Legend to make
+# it easier to see...
+diseaseincidence %>%
+  ggplot(mapping = aes(x = `MMWR WEEK`, y = `Current week`, color = Label)) +
+  geom_line() + labs(x = "MMWR Week", y = "Incidence of Disease", title = 
+                       "Disease Incidence Over Time (by Epi Week of 2022)") +
+  theme(legend.position = "none")
+
+
+# Disease Frequency in 2022
+diseaseincidence1 %>%
+  ggplot(mapping = aes(x = reorder(Label, -Freq), y = Freq, fill = Label)) + 
+  geom_bar(stat = 'identity') + 
+  scale_x_discrete(labels = function(Label) str_wrap(Label, width = 6)) +
+  theme(legend.position = "none") + geom_text(aes(label = Freq), vjust = 0)
+  labs(x = "Disease Frequency", y = "Disease Reported", 
+       title = "Frequency of Top Ten Reported Disease in Georgia in NNDSS in 2022")
+
+```
+
+## Feel Free to start here...Have fun!
+
+
+
+
+
+
+
+
+

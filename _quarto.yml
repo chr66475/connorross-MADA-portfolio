@@ -16,9 +16,11 @@ website:
             href: ./visualization_exercise.html
           - text: "Tidy Tuesday Exercise"
             href: ./tidytuesday_exercise.html
+          - text: "Data Analysis Exercise"
+            href: ./dataanalysis_exercise.html
     right:
       - icon: github 
-        href: URL-TO-THIS-REPOSITORY-HERE        
+        href: https://github.com/chr66475/connorross-MADA-portfolio     
 
 format:
   html:

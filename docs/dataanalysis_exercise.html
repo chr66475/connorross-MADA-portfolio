@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.313">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>My Data Analysis Portfolio - dataanalysis_exercise</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="nav-fixed fullcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">My Data Analysis Portfolio</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="././aboutme.html">
+ <span class="menu-text">About Me</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-projects" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Projects</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-projects">    
+        <li>
+    <a class="dropdown-item" href="././coding_exercise.html">
+ <span class="dropdown-text">R Coding Exercise</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="././visualization_exercise.html">
+ <span class="dropdown-text">Visualization Exercise</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="././tidytuesday_exercise.html">
+ <span class="dropdown-text">Tidy Tuesday Exercise</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="././dataanalysis_exercise.html">
+ <span class="dropdown-text">Data Analysis Exercise</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/chr66475/connorross-MADA-portfolio"><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">dataanalysis_exercise</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="data-analysis-exercise-module-4-exercise" class="level1">
+<h1>Data Analysis Exercise (Module 4 Exercise)</h1>
+<section id="description-of-dataset" class="level2">
+<h2 class="anchored" data-anchor-id="description-of-dataset">Description of Dataset</h2>
+<p>This data comes from the Centers for Disease Control and Prevention’s National Notifiable Diseases Surveillance System (NNDSS). Every week the CDC posts data received from the NNDSS system by the 50 states and US territories. This data set in particular was posted on 01.26.2023.</p>
+</section>
+<section id="load-and-clean-the-data" class="level2">
+<h2 class="anchored" data-anchor-id="load-and-clean-the-data">Load and clean the data…</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load necessary packages...</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'tidyverse' was built under R version 4.2.2</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Attaching packages ─────────────────────────────────────── tidyverse 1.3.2 ──
+✔ ggplot2 3.4.0      ✔ purrr   0.3.5 
+✔ tibble  3.1.8      ✔ dplyr   1.0.10
+✔ tidyr   1.2.1      ✔ stringr 1.5.0 
+✔ readr   2.1.3      ✔ forcats 0.5.2 </code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'ggplot2' was built under R version 4.2.2</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'readr' was built under R version 4.2.2</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'purrr' was built under R version 4.2.2</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'dplyr' was built under R version 4.2.2</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'stringr' was built under R version 4.2.2</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Loading the raw data set.</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>RawNNDSS <span class="ot">&lt;-</span> readr<span class="sc">::</span> <span class="fu">read_csv</span>(<span class="st">"data/NNDSS_Weekly_Data.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Rows: 424130 Columns: 16
+── Column specification ────────────────────────────────────────────────────────
+Delimiter: ","
+chr (9): Reporting Area, Label, Current week, flag, Previous 52 weeks Max, f...
+dbl (7): Current MMWR Year, MMWR WEEK, Current week, Previous 52 week Max, C...
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Let's take a look...</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(RawNNDSS)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> Reporting Area     Current MMWR Year   MMWR WEEK        Label          
+ Length:424130      Min.   :2022      Min.   : 1.00   Length:424130     
+ Class :character   1st Qu.:2022      1st Qu.:11.00   Class :character  
+ Mode  :character   Median :2022      Median :25.00   Mode  :character  
+                    Mean   :2022      Mean   :25.13                     
+                    3rd Qu.:2022      3rd Qu.:39.00                     
+                    Max.   :2023      Max.   :52.00                     
+                                                                        
+  Current week     Current week, flag Previous 52 week Max
+ Min.   :    1.0   Length:424130      Min.   :    0.0     
+ 1st Qu.:    1.0   Class :character   1st Qu.:    0.0     
+ Median :    3.0   Mode  :character   Median :    0.0     
+ Mean   :  107.5                      Mean   :   16.8     
+ 3rd Qu.:   16.0                      3rd Qu.:    2.0     
+ Max.   :17162.0                      Max.   :31207.0     
+ NA's   :387848                       NA's   :54813       
+ Previous 52 weeks Max, flag Cumulative YTD Current MMWR Year
+ Length:424130               Min.   :      1                 
+ Class :character            1st Qu.:      2                 
+ Mode  :character            Median :     11                 
+                             Mean   :   1758                 
+                             3rd Qu.:     74                 
+                             Max.   :1405282                 
+                             NA's   :297627                  
+ Cumulative YTD Current MMWR Year, flag Cumulative YTD Previous MMWR Year
+ Length:424130                          Min.   :      1                  
+ Class :character                       1st Qu.:      2                  
+ Mode  :character                       Median :     10                  
+                                        Mean   :   2012                  
+                                        3rd Qu.:     75                  
+                                        Max.   :1649210                  
+                                        NA's   :283732                   
+ Cumulative YTD Previous MMWR Year, flag  LOCATION1          LOCATION2        
+ Length:424130                           Length:424130      Length:424130     
+ Class :character                        Class :character   Class :character  
+ Mode  :character                        Mode  :character   Mode  :character  
+                                                                              
+                                                                              
+                                                                              
+                                                                              
+   sort_order          geocode         
+ Min.   :2.022e+10   Length:424130     
+ 1st Qu.:2.022e+10   Class :character  
+ Median :2.022e+10   Mode  :character  
+ Mean   :2.022e+10                     
+ 3rd Qu.:2.022e+10                     
+ Max.   :2.023e+10                     
+                                       </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(RawNNDSS)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>spc_tbl_ [424,130 × 16] (S3: spec_tbl_df/tbl_df/tbl/data.frame)
+ $ Reporting Area                         : chr [1:424130] "US RESIDENTS" "NEW ENGLAND" "CONNECTICUT" "MAINE" ...
+ $ Current MMWR Year                      : num [1:424130] 2022 2022 2022 2022 2022 ...
+ $ MMWR WEEK                              : num [1:424130] 10 10 10 10 10 10 10 10 10 10 ...
+ $ Label                                  : chr [1:424130] "Anthrax" "Anthrax" "Anthrax" "Anthrax" ...
+ $ Current week                           : num [1:424130] NA NA NA NA NA NA NA NA NA NA ...
+ $ Current week, flag                     : chr [1:424130] "-" "-" "-" "-" ...
+ $ Previous 52 week Max                   : num [1:424130] 0 0 0 0 0 0 0 0 0 0 ...
+ $ Previous 52 weeks Max, flag            : chr [1:424130] "-" "-" "-" "-" ...
+ $ Cumulative YTD Current MMWR Year       : num [1:424130] NA NA NA NA NA NA NA NA NA NA ...
+ $ Cumulative YTD Current MMWR Year, flag : chr [1:424130] "-" "-" "-" "-" ...
+ $ Cumulative YTD Previous MMWR Year      : num [1:424130] NA NA NA NA NA NA NA NA NA NA ...
+ $ Cumulative YTD Previous MMWR Year, flag: chr [1:424130] "-" "-" "-" "-" ...
+ $ LOCATION1                              : chr [1:424130] NA NA "CONNECTICUT" "MAINE" ...
+ $ LOCATION2                              : chr [1:424130] "US RESIDENTS" "NEW ENGLAND" NA NA ...
+ $ sort_order                             : num [1:424130] 2.02e+10 2.02e+10 2.02e+10 2.02e+10 2.02e+10 ...
+ $ geocode                                : chr [1:424130] NA NA "POINT (-72.738288 41.575155)" "POINT (-69.06137 45.117911)" ...
+ - attr(*, "spec")=
+  .. cols(
+  ..   `Reporting Area` = col_character(),
+  ..   `Current MMWR Year` = col_double(),
+  ..   `MMWR WEEK` = col_double(),
+  ..   Label = col_character(),
+  ..   `Current week` = col_double(),
+  ..   `Current week, flag` = col_character(),
+  ..   `Previous 52 week Max` = col_double(),
+  ..   `Previous 52 weeks Max, flag` = col_character(),
+  ..   `Cumulative YTD Current MMWR Year` = col_double(),
+  ..   `Cumulative YTD Current MMWR Year, flag` = col_character(),
+  ..   `Cumulative YTD Previous MMWR Year` = col_double(),
+  ..   `Cumulative YTD Previous MMWR Year, flag` = col_character(),
+  ..   LOCATION1 = col_character(),
+  ..   LOCATION2 = col_character(),
+  ..   sort_order = col_double(),
+  ..   geocode = col_character()
+  .. )
+ - attr(*, "problems")=&lt;externalptr&gt; </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="do">## I'm kind of only interested in Georgia since I live here now...</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>GeorgiaNNDSS <span class="ot">&lt;-</span> RawNNDSS <span class="sc">%&gt;%</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="st">`</span><span class="at">Reporting Area</span><span class="st">`</span> <span class="sc">==</span> <span class="st">"GEORGIA"</span>)</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(GeorgiaNNDSS)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> Reporting Area     Current MMWR Year   MMWR WEEK        Label          
+ Length:6059        Min.   :2022      Min.   : 1.00   Length:6059       
+ Class :character   1st Qu.:2022      1st Qu.:11.00   Class :character  
+ Mode  :character   Median :2022      Median :25.00   Mode  :character  
+                    Mean   :2022      Mean   :25.13                     
+                    3rd Qu.:2022      3rd Qu.:39.00                     
+                    Max.   :2023      Max.   :52.00                     
+                                                                        
+  Current week    Current week, flag Previous 52 week Max
+ Min.   :  1.00   Length:6059        Min.   :   0.00     
+ 1st Qu.:  1.00   Class :character   1st Qu.:   0.00     
+ Median :  3.00   Mode  :character   Median :   0.00     
+ Mean   : 97.55                      Mean   :  10.57     
+ 3rd Qu.: 13.00                      3rd Qu.:   2.00     
+ Max.   :866.00                      Max.   :1362.00     
+ NA's   :5656                        NA's   :746         
+ Previous 52 weeks Max, flag Cumulative YTD Current MMWR Year
+ Length:6059                 Min.   :    1                   
+ Class :character            1st Qu.:    5                   
+ Mode  :character            Median :   26                   
+                             Mean   : 1409                   
+                             3rd Qu.:  154                   
+                             Max.   :49590                   
+                             NA's   :4538                    
+ Cumulative YTD Current MMWR Year, flag Cumulative YTD Previous MMWR Year
+ Length:6059                            Min.   :    1                    
+ Class :character                       1st Qu.:    4                    
+ Mode  :character                       Median :   28                    
+                                        Mean   : 1444                    
+                                        3rd Qu.:  124                    
+                                        Max.   :67941                    
+                                        NA's   :4116                     
+ Cumulative YTD Previous MMWR Year, flag  LOCATION1          LOCATION2        
+ Length:6059                             Length:6059        Length:6059       
+ Class :character                        Class :character   Class :character  
+ Mode  :character                        Mode  :character   Mode  :character  
+                                                                              
+                                                                              
+                                                                              
+                                                                              
+   sort_order          geocode         
+ Min.   :2.022e+10   Length:6059       
+ 1st Qu.:2.022e+10   Class :character  
+ Median :2.022e+10   Mode  :character  
+ Mean   :2.022e+10                     
+ 3rd Qu.:2.022e+10                     
+ Max.   :2.023e+10                     
+                                       </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(GeorgiaNNDSS)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>spc_tbl_ [6,059 × 16] (S3: spec_tbl_df/tbl_df/tbl/data.frame)
+ $ Reporting Area                         : chr [1:6059] "GEORGIA" "GEORGIA" "GEORGIA" "GEORGIA" ...
+ $ Current MMWR Year                      : num [1:6059] 2022 2022 2022 2022 2022 ...
+ $ MMWR WEEK                              : num [1:6059] 10 10 10 10 10 10 10 10 10 10 ...
+ $ Label                                  : chr [1:6059] "Anthrax" "Arboviral diseases, Chikungunya virus disease" "Arboviral diseases, Eastern equine encephalitis virus disease" "Arboviral diseases, Jamestown Canyon  virus disease" ...
+ $ Current week                           : num [1:6059] NA NA NA NA NA NA NA NA NA NA ...
+ $ Current week, flag                     : chr [1:6059] "-" "-" "-" "-" ...
+ $ Previous 52 week Max                   : num [1:6059] 0 0 1 0 0 0 0 1 0 NA ...
+ $ Previous 52 weeks Max, flag            : chr [1:6059] "-" "-" "-" "-" ...
+ $ Cumulative YTD Current MMWR Year       : num [1:6059] NA NA NA NA NA NA NA 1 NA NA ...
+ $ Cumulative YTD Current MMWR Year, flag : chr [1:6059] "-" "-" "-" "-" ...
+ $ Cumulative YTD Previous MMWR Year      : num [1:6059] NA NA NA NA NA NA NA NA NA NA ...
+ $ Cumulative YTD Previous MMWR Year, flag: chr [1:6059] "-" "-" "-" "-" ...
+ $ LOCATION1                              : chr [1:6059] "GEORGIA" "GEORGIA" "GEORGIA" "GEORGIA" ...
+ $ LOCATION2                              : chr [1:6059] NA NA NA NA ...
+ $ sort_order                             : num [1:6059] 2.02e+10 2.02e+10 2.02e+10 2.02e+10 2.02e+10 ...
+ $ geocode                                : chr [1:6059] "POINT (-83.426574 32.638481)" "POINT (-83.426574 32.638481)" "POINT (-83.426574 32.638481)" "POINT (-83.426574 32.638481)" ...
+ - attr(*, "spec")=
+  .. cols(
+  ..   `Reporting Area` = col_character(),
+  ..   `Current MMWR Year` = col_double(),
+  ..   `MMWR WEEK` = col_double(),
+  ..   Label = col_character(),
+  ..   `Current week` = col_double(),
+  ..   `Current week, flag` = col_character(),
+  ..   `Previous 52 week Max` = col_double(),
+  ..   `Previous 52 weeks Max, flag` = col_character(),
+  ..   `Cumulative YTD Current MMWR Year` = col_double(),
+  ..   `Cumulative YTD Current MMWR Year, flag` = col_character(),
+  ..   `Cumulative YTD Previous MMWR Year` = col_double(),
+  ..   `Cumulative YTD Previous MMWR Year, flag` = col_character(),
+  ..   LOCATION1 = col_character(),
+  ..   LOCATION2 = col_character(),
+  ..   sort_order = col_double(),
+  ..   geocode = col_character()
+  .. )
+ - attr(*, "problems")=&lt;externalptr&gt; </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="do">## What diseases DID Georgia from 2022 until now...</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>currentweek <span class="ot">&lt;-</span> GeorgiaNNDSS <span class="sc">%&gt;%</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="st">`</span><span class="at">Current MMWR Year</span><span class="st">`</span> <span class="sc">&gt;=</span> <span class="dv">2022</span> <span class="sc">&amp;</span> <span class="st">`</span><span class="at">Current week</span><span class="st">`</span> <span class="sc">!=</span> <span class="st">'NA'</span>)</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="do">## Ehhhh let's get rid of 2022 for the sake of clear MMWR weeks...</span></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>currentweek <span class="ot">&lt;-</span> GeorgiaNNDSS <span class="sc">%&gt;%</span></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="st">`</span><span class="at">Current MMWR Year</span><span class="st">`</span> <span class="sc">==</span> <span class="dv">2022</span> <span class="sc">&amp;</span> <span class="st">`</span><span class="at">Current week</span><span class="st">`</span> <span class="sc">!=</span> <span class="st">'NA'</span>)</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a><span class="do">## Lets take a look at what diseases were MOST reported...</span></span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>diseaseincidence <span class="ot">&lt;-</span> currentweek <span class="sc">%&gt;%</span></span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Label, <span class="st">`</span><span class="at">MMWR WEEK</span><span class="st">`</span>,<span class="st">`</span><span class="at">Current week</span><span class="st">`</span>) </span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a><span class="do">## Closer...</span></span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>diseaseincidence1 <span class="ot">&lt;-</span> currentweek <span class="sc">%&gt;%</span></span>
+<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Label, <span class="st">`</span><span class="at">Current week</span><span class="st">`</span>)</span>
+<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a><span class="do">## Almost there...</span></span>
+<span id="cb20-18"><a href="#cb20-18" aria-hidden="true" tabindex="-1"></a>diseaseincidence1 <span class="ot">&lt;-</span> diseaseincidence1 <span class="sc">%&gt;%</span></span>
+<span id="cb20-19"><a href="#cb20-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Label) <span class="sc">%&gt;%</span></span>
+<span id="cb20-20"><a href="#cb20-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">Freq =</span> <span class="fu">sum</span>(<span class="st">`</span><span class="at">Current week</span><span class="st">`</span>))</span>
+<span id="cb20-21"><a href="#cb20-21" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb20-22"><a href="#cb20-22" aria-hidden="true" tabindex="-1"></a><span class="do">## Finally top ten have been narrowed down!</span></span>
+<span id="cb20-23"><a href="#cb20-23" aria-hidden="true" tabindex="-1"></a>diseaseincidence1 <span class="ot">&lt;-</span> diseaseincidence1 <span class="sc">%&gt;%</span></span>
+<span id="cb20-24"><a href="#cb20-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(Freq)) <span class="sc">%&gt;%</span></span>
+<span id="cb20-25"><a href="#cb20-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="im-a-curious-guy-so-im-going-to-plot-diseases-reported-over-time-and-a" class="level2">
+<h2 class="anchored" data-anchor-id="im-a-curious-guy-so-im-going-to-plot-diseases-reported-over-time-and-a">I’m a curious guy so I’m going to plot diseases reported over time and a</h2>
+</section>
+<section id="barplot-to-see-the-total-burden-of-disease-in-georgia-in-2022" class="level2">
+<h2 class="anchored" data-anchor-id="barplot-to-see-the-total-burden-of-disease-in-georgia-in-2022">barplot to see the total burden of disease in Georgia in 2022…</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="do">## You'll need two files for this...</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(diseaseincidence, <span class="at">file =</span> <span class="st">"data/disease_incidence_time.rds"</span>)</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(diseaseincidence1, <span class="at">file =</span> <span class="st">"data/disease_freq.rds"</span>)</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the thingy...</span></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Disease incidence over time...</span></span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>diseaseincidence <span class="sc">%&gt;%</span></span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> <span class="st">`</span><span class="at">MMWR WEEK</span><span class="st">`</span>, <span class="at">y =</span> <span class="st">`</span><span class="at">Current week</span><span class="st">`</span>, <span class="at">color =</span> Label)) <span class="sc">+</span></span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"MMWR Week"</span>, <span class="at">y =</span> <span class="st">"Incidence of Disease"</span>, <span class="at">title =</span> </span>
+<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a>                       <span class="st">"Disease Incidence Over Time (by Epi Week)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="dataanalysis_exercise_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Wooooo that plot was extremely long, I'm going to remove the Legend to make</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="co"># it easier to see...</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>diseaseincidence <span class="sc">%&gt;%</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> <span class="st">`</span><span class="at">MMWR WEEK</span><span class="st">`</span>, <span class="at">y =</span> <span class="st">`</span><span class="at">Current week</span><span class="st">`</span>, <span class="at">color =</span> Label)) <span class="sc">+</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"MMWR Week"</span>, <span class="at">y =</span> <span class="st">"Incidence of Disease"</span>, <span class="at">title =</span> </span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>                       <span class="st">"Disease Incidence Over Time (by Epi Week of 2022)"</span>) <span class="sc">+</span></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="dataanalysis_exercise_files/figure-html/unnamed-chunk-2-2.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Disease Frequency in 2022</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>diseaseincidence1 <span class="sc">%&gt;%</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(Label, <span class="sc">-</span>Freq), <span class="at">y =</span> Freq, <span class="at">fill =</span> Label)) <span class="sc">+</span> </span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">'identity'</span>) <span class="sc">+</span> </span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_discrete</span>(<span class="at">labels =</span> <span class="cf">function</span>(Label) <span class="fu">str_wrap</span>(Label, <span class="at">width =</span> <span class="dv">6</span>)) <span class="sc">+</span></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>) <span class="sc">+</span> <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> Freq), <span class="at">vjust =</span> <span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="dataanalysis_exercise_files/figure-html/unnamed-chunk-2-3.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Disease Frequency"</span>, <span class="at">y =</span> <span class="st">"Disease Reported"</span>, </span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">"Frequency of Top Ten Reported Disease in Georgia in NNDSS in 2022"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$x
+[1] "Disease Frequency"
+
+$y
+[1] "Disease Reported"
+
+$title
+[1] "Frequency of Top Ten Reported Disease in Georgia in NNDSS in 2022"
+
+attr(,"class")
+[1] "labels"</code></pre>
+</div>
+</div>
+</section>
+<section id="feel-free-to-start-herehave-fun" class="level2">
+<h2 class="anchored" data-anchor-id="feel-free-to-start-herehave-fun">Feel Free to start here…Have fun!</h2>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
