@@ -104,8 +104,54 @@ ggplot(mapping = aes(x = reorder(Label, -Freq), y = Freq, fill = Label)) +
 
 ## Feel Free to start here...Have fun!
 
+Everything from here on out was done by Katie Wells
+
+Hi Connor! :) You already did some pretty cool analysis above, but I'm interested in the 10 least commonly reported infectious diseases in Georgia in this time period. Here we go!
+
+```{r}
+top_ten <- readRDS("data/disease_freq.rds")
+all_ga <- readRDS("data/disease_incidence_time.rds")
+```
 
 
+```{r}
+#make a new dataset with the 10 least reported diseases
+least_incidence <- all_ga %>%
+  group_by(Label) %>%
+  summarise(Freq = sum(`Current week`)) %>% arrange(Freq) %>%
+  head(10)
+
+#let's take a look
+print(least_incidence)
+```
+Cool! I'm glad to see that these diseases have a very low frequency in Georgia (but a little concerned that they might be hanging around). Let's put these in a bar graph to visualize it better. 
+
+```{r}
+#graphing the 10 least reported; I'll keep the same theme as above for cohesiveness
+least_incidence %>%
+ggplot(mapping = aes(x = reorder(Label, -Freq), y = Freq, fill = Label)) + 
+  geom_bar(stat = 'identity') + 
+  scale_x_discrete(labels = function(Label) str_wrap(Label, width = 6)) +
+  theme(legend.position = "none") + geom_text(aes(label = Freq), vjust = 0) +
+  labs(x = "Disease", y = "Cases Reported", 
+       title = "Frequency of Ten Least Reported Diseases in Georgia in NNDSS in 2022")
+```
+Also cool! I wonder when these reports occurred in relation to MMWR weeks...
+
+```{r}
+#filter the all_ga data with the 10 least reported I found earlier
+all_ga2 = filter(all_ga, Label %in% c("Haemophilus influenzae, invasive disease, Age <5 years, Unknown serotype", "Invasive pneumococcal disease, age <5 years, Confirmed", "Listeriosis, Confirmed", "Mumps", "Hepatitis, B, acute", "Tuberculosis", "Pertussis", "Haemophilus influenzae, invasive disease, All ages, all serotypes", "Shiga toxin-producing Escherichia coli (STEC)", "Varicella morbidity"))
+
+#graph a scatterplot, see color legend above for particular disease
+all_ga2 %>%
+  ggplot(mapping = aes(x = `MMWR WEEK`, y = `Current week`, color = Label)) +
+  geom_point() + labs(x = "MMWR Week", y = "Incidence of Disease", title = 
+                       "Incidence of 10 Least Reported Diseases in Georgia Over Time") +
+  theme(legend.position = "none")
+```
+Now we can see when these cases were reported based on MMWR week. It looks like these incidences were rather spread out across the year with only a couple of diseases having more than one case per week. 
+
+All in all I though this was a really interesting dataset, and I like the way you processed the data as it led to some cool analyses!
 
 
 
