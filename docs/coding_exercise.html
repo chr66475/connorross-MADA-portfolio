@@ -163,12 +163,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <a class="dropdown-item" href="././tidytuesday_exercise.html">
  <span class="dropdown-text">Tidy Tuesday Exercise</span></a>
   </li>  
+        <li>
+    <a class="dropdown-item" href="././dataanalysis_exercise.html">
+ <span class="dropdown-text">Data Analysis Exercise</span></a>
+  </li>  
     </ul>
   </li>
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item compact">
-    <a class="nav-link" href="./URL-TO-THIS-REPOSITORY-HERE"><i class="bi bi-github" role="img">
+    <a class="nav-link" href="https://github.com/chr66475/connorross-MADA-portfolio"><i class="bi bi-github" role="img">
 </i> 
  <span class="menu-text"></span></a>
   </li>  
@@ -203,10 +207,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 </header>
 
-<p>Placeholder file for the future R coding exercise.</p>
 <section id="getting-starting" class="level2">
 <h2 class="anchored" data-anchor-id="getting-starting">Getting Starting</h2>
-<p>install.packages(‘dslabs’) install.packages(‘tidyverse’) install.packages(‘ggplot2’)</p>
 </section>
 <section id="loading-and-checking-data" class="level2">
 <h2 class="anchored" data-anchor-id="loading-and-checking-data">Loading and Checking Data</h2>
@@ -399,14 +401,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <section id="plotting" class="level2">
 <h2 class="anchored" data-anchor-id="plotting">Plotting</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Install ggplot2</span></span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot life expectancy as a function of inf_mortality</span></span>
-<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(inf_mortality, <span class="fu">aes</span>(<span class="at">x =</span> infant_mortality,</span>
-<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>                          <span class="at">y =</span> life_expectancy)) <span class="sc">+</span></span>
-<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Infant Mortality (per 1,000 births)"</span>,</span>
-<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>                      <span class="at">y =</span> <span class="st">"Life Expectancy (in years)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot life expectancy as a function of inf_mortality</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(inf_mortality, <span class="fu">aes</span>(<span class="at">x =</span> infant_mortality,</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>                          <span class="at">y =</span> life_expectancy)) <span class="sc">+</span></span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Infant Mortality (per 1,000 births)"</span>,</span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>                      <span class="at">y =</span> <span class="st">"Life Expectancy (in years)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: Removed 226 rows containing missing values (`geom_point()`).</code></pre>
 </div>
@@ -1032,6 +1031,85 @@ F-statistic: 0.2549 on 1 and 49 DF,  p-value: 0.6159</code></pre>
 <section id="conclusions" class="level2">
 <h2 class="anchored" data-anchor-id="conclusions">Conclusions</h2>
 <p>While the data does not show a statistically significant association between life expectancy and population size given our p-value is greater than our alpha level of 0.05 (p = 0.62), there was significant evidence of an association between life expectancy and infant mortality give out p-value is less than our alpha level of 0.05 (p &lt; 0.001). Life expectancy decreases by 2.49 year on average for every unit increase in infant mortality.</p>
+<p>This section was added by Hayley Hemme</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>world_2000 <span class="ot">&lt;-</span> gapminder <span class="sc">%&gt;%</span></span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(year <span class="sc">==</span> <span class="st">"2000"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Let’s take a look at the distribution of fertility rates across the world in 2000.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>world_2000 <span class="sc">%&gt;%</span> <span class="fu">ggplot</span>() <span class="sc">+</span> <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">x=</span>fertility)) <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Histogram of Fertility Rates in 2000"</span>, <span class="at">x =</span> <span class="st">"Fertility Rate"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="coding_exercise_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>There is a positively skewed distribution. Let’s see if viewing fertility rates by continent will revel anything interesting.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>world_2000 <span class="sc">%&gt;%</span> <span class="fu">ggplot</span>() <span class="sc">+</span> <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">x=</span>fertility, <span class="at">fill=</span>  continent)) <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Histogram of Fertility Rates in 2000 by Continent"</span>, <span class="at">x =</span> <span class="st">"Fertility Rate"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="coding_exercise_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>This plot reveals that highest average fertility rates occur in African countries, while lowest average fertility rates are seen in European countries.</p>
+<p>Here is the same information plotted as a scatterplot with a fitted line for each continent.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a>world_2000 <span class="sc">%&gt;%</span>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> fertility, <span class="at">y =</span> life_expectancy, <span class="at">color =</span> continent)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">stat_smooth</span>(<span class="at">se =</span> F) <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Fertility Rates and Life Expectancy in 2000 by Continent"</span>, <span class="at">x =</span> <span class="st">"Fertility Rate"</span>, <span class="at">y =</span> <span class="st">"Life Expectancy (years)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="coding_exercise_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Let’s see how well fertility rate can predict life expectancy around the world in 2000.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>model1 <span class="ot">&lt;-</span> (<span class="fu">lm</span>(life_expectancy <span class="sc">~</span> fertility, <span class="at">data =</span> world_2000))</span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = life_expectancy ~ fertility, data = world_2000)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-19.411  -3.623   1.071   3.836  16.247 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)  82.1892     0.9002   91.30   &lt;2e-16 ***
+fertility    -4.4512     0.2457  -18.12   &lt;2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 5.751 on 183 degrees of freedom
+Multiple R-squared:  0.6421,    Adjusted R-squared:  0.6401 
+F-statistic: 328.3 on 1 and 183 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+</div>
+<p>This model seems to suggest that fertility is a good predictor of life expectancy. For every birth increase in average fertility rate, life expectancy decreases by 4.45 years (p &lt; 0.0001). Let’s see how this compares to infant mortality, which was found to be a statisitically significant predictor of life expectancy in Africa during the same year.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>model2 <span class="ot">&lt;-</span> (<span class="fu">lm</span>(life_expectancy <span class="sc">~</span> infant_mortality, <span class="at">data =</span> world_2000))</span>
+<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = life_expectancy ~ infant_mortality, data = world_2000)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-25.2616  -1.8119   0.8063   2.8264   9.6925 
+
+Coefficients:
+                  Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)      77.302172   0.503151  153.64   &lt;2e-16 ***
+infant_mortality -0.247695   0.009592  -25.82   &lt;2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 4.424 on 176 degrees of freedom
+  (7 observations deleted due to missingness)
+Multiple R-squared:  0.7912,    Adjusted R-squared:   0.79 
+F-statistic: 666.8 on 1 and 176 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+</div>
+<p>Globally, there is a stronger correlation between infant mortality rate and life expectancy compared to fertility rate and life expectancy (R-squared = 0.79 vs.&nbsp;0.64). For every unit increase in infant mortality rate, life expectancy decreases by 0.25 years (p &lt; 0.0001).</p>
 
 
 </section>

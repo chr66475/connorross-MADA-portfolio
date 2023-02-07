@@ -21,41 +21,6 @@
     "text": "Interested in research?\nThis is a article I co-authored on one of the projects I was involved in at USC:\nDeterminants of COVID-19 Vaccination among a State-Wide Year-Long Surveillance Initiative in a Conservative Southern State\nIt’s on a year COVID-19 prevalence and vaccination surveillance study in South Carolina. There were several analysis conducted for this paper including a principal component analysis, survival analysis, and a geospatial temporal analysis. This project is unique in that it provided us funding for primary data collection, and testing using new technology call d-PCR (compared to q-PCR) and even a continuation of this project now called All-IN SC."
   },
   {
-    "objectID": "coding_exercise.html",
-    "href": "coding_exercise.html",
-    "title": "R Coding Exercise",
-    "section": "",
-    "text": "Placeholder file for the future R coding exercise."
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "My website and data analysis portfolio",
-    "section": "",
-    "text": "Hello\n\nAnd hello again\nWelcome to my website and data analysis portfolio.\n\nPlease use the Menu Bar above to look around.\nHave fun!"
-  },
-  {
-    "objectID": "tidytuesday_exercise.html",
-    "href": "tidytuesday_exercise.html",
-    "title": "Tidy Tuesday Exercise",
-    "section": "",
-    "text": "Placeholder file for the future Tidy Tuesday exercise."
-  },
-  {
-    "objectID": "visualization_exercise.html",
-    "href": "visualization_exercise.html",
-    "title": "Visualization Exercise",
-    "section": "",
-    "text": "Placeholder file for the future visualization exercise."
-  },
-  {
-    "objectID": "coding_exercise.html#getting-starting",
-    "href": "coding_exercise.html#getting-starting",
-    "title": "R Coding Exercise",
-    "section": "Getting Starting",
-    "text": "Getting Starting\ninstall.packages(‘dslabs’) install.packages(‘tidyverse’) install.packages(‘ggplot2’)"
-  },
-  {
     "objectID": "coding_exercise.html#loading-and-checking-data",
     "href": "coding_exercise.html#loading-and-checking-data",
     "title": "R Coding Exercise",
@@ -74,7 +39,7 @@
     "href": "coding_exercise.html#plotting",
     "title": "R Coding Exercise",
     "section": "Plotting",
-    "text": "Plotting\n\n# Install ggplot2\nlibrary(ggplot2)\n\n# Plot life expectancy as a function of inf_mortality\nggplot(inf_mortality, aes(x = infant_mortality,\n                          y = life_expectancy)) +\n  geom_point() + labs(x = \"Infant Mortality (per 1,000 births)\",\n                      y = \"Life Expectancy (in years)\")\n\nWarning: Removed 226 rows containing missing values (`geom_point()`).\n\n\n\n\n# Plot life expectancy as a function of population size\nggplot(lif_expect, aes(x = log(population),\n                          y = life_expectancy)) +\n  geom_point() + labs(x = \"Log Population\", y = \"Life Expectancy (in years)\")\n\nWarning: Removed 51 rows containing missing values (`geom_point()`)."
+    "text": "Plotting\n\n# Plot life expectancy as a function of inf_mortality\nggplot(inf_mortality, aes(x = infant_mortality,\n                          y = life_expectancy)) +\n  geom_point() + labs(x = \"Infant Mortality (per 1,000 births)\",\n                      y = \"Life Expectancy (in years)\")\n\nWarning: Removed 226 rows containing missing values (`geom_point()`).\n\n\n\n\n# Plot life expectancy as a function of population size\nggplot(lif_expect, aes(x = log(population),\n                          y = life_expectancy)) +\n  geom_point() + labs(x = \"Log Population\", y = \"Life Expectancy (in years)\")\n\nWarning: Removed 51 rows containing missing values (`geom_point()`)."
   },
   {
     "objectID": "coding_exercise.html#more-data-processing",
@@ -102,6 +67,34 @@
     "href": "coding_exercise.html#conclusions",
     "title": "R Coding Exercise",
     "section": "Conclusions",
-    "text": "Conclusions\nWhile the data does not show a statistically significant association between life expectancy and population size given our p-value is greater than our alpha level of 0.05 (p = 0.62), there was significant evidence of an association between life expectancy and infant mortality give out p-value is less than our alpha level of 0.05 (p < 0.001). Life expectancy decreases by 2.49 year on average for every unit increase in infant mortality."
+    "text": "Conclusions\nWhile the data does not show a statistically significant association between life expectancy and population size given our p-value is greater than our alpha level of 0.05 (p = 0.62), there was significant evidence of an association between life expectancy and infant mortality give out p-value is less than our alpha level of 0.05 (p < 0.001). Life expectancy decreases by 2.49 year on average for every unit increase in infant mortality.\nThis section was added by Hayley Hemme\n\nworld_2000 <- gapminder %>%\n  filter(year == \"2000\")\n\nLet’s take a look at the distribution of fertility rates across the world in 2000.\n\nworld_2000 %>% ggplot() + geom_histogram(aes(x=fertility)) + labs(title = \"Histogram of Fertility Rates in 2000\", x = \"Fertility Rate\")\n\n\n\n\nThere is a positively skewed distribution. Let’s see if viewing fertility rates by continent will revel anything interesting.\n\nworld_2000 %>% ggplot() + geom_histogram(aes(x=fertility, fill=  continent)) + labs(title = \"Histogram of Fertility Rates in 2000 by Continent\", x = \"Fertility Rate\")\n\n\n\n\nThis plot reveals that highest average fertility rates occur in African countries, while lowest average fertility rates are seen in European countries.\nHere is the same information plotted as a scatterplot with a fitted line for each continent.\n\nworld_2000 %>%  ggplot(aes(x = fertility, y = life_expectancy, color = continent)) + geom_point() + stat_smooth(se = F) + labs(title = \"Fertility Rates and Life Expectancy in 2000 by Continent\", x = \"Fertility Rate\", y = \"Life Expectancy (years)\")\n\n\n\n\nLet’s see how well fertility rate can predict life expectancy around the world in 2000.\n\nmodel1 <- (lm(life_expectancy ~ fertility, data = world_2000))\nsummary(model1)\n\n\nCall:\nlm(formula = life_expectancy ~ fertility, data = world_2000)\n\nResiduals:\n    Min      1Q  Median      3Q     Max \n-19.411  -3.623   1.071   3.836  16.247 \n\nCoefficients:\n            Estimate Std. Error t value Pr(>|t|)    \n(Intercept)  82.1892     0.9002   91.30   <2e-16 ***\nfertility    -4.4512     0.2457  -18.12   <2e-16 ***\n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\nResidual standard error: 5.751 on 183 degrees of freedom\nMultiple R-squared:  0.6421,    Adjusted R-squared:  0.6401 \nF-statistic: 328.3 on 1 and 183 DF,  p-value: < 2.2e-16\n\n\nThis model seems to suggest that fertility is a good predictor of life expectancy. For every birth increase in average fertility rate, life expectancy decreases by 4.45 years (p < 0.0001). Let’s see how this compares to infant mortality, which was found to be a statisitically significant predictor of life expectancy in Africa during the same year.\n\nmodel2 <- (lm(life_expectancy ~ infant_mortality, data = world_2000))\nsummary(model2)\n\n\nCall:\nlm(formula = life_expectancy ~ infant_mortality, data = world_2000)\n\nResiduals:\n     Min       1Q   Median       3Q      Max \n-25.2616  -1.8119   0.8063   2.8264   9.6925 \n\nCoefficients:\n                  Estimate Std. Error t value Pr(>|t|)    \n(Intercept)      77.302172   0.503151  153.64   <2e-16 ***\ninfant_mortality -0.247695   0.009592  -25.82   <2e-16 ***\n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\nResidual standard error: 4.424 on 176 degrees of freedom\n  (7 observations deleted due to missingness)\nMultiple R-squared:  0.7912,    Adjusted R-squared:   0.79 \nF-statistic: 666.8 on 1 and 176 DF,  p-value: < 2.2e-16\n\n\nGlobally, there is a stronger correlation between infant mortality rate and life expectancy compared to fertility rate and life expectancy (R-squared = 0.79 vs. 0.64). For every unit increase in infant mortality rate, life expectancy decreases by 0.25 years (p < 0.0001)."
+  },
+  {
+    "objectID": "dataanalysis_exercise.html",
+    "href": "dataanalysis_exercise.html",
+    "title": "dataanalysis_exercise",
+    "section": "",
+    "text": "This data comes from the Centers for Disease Control and Prevention’s National Notifiable Diseases Surveillance System (NNDSS). Every week the CDC posts data received from the NNDSS system by the 50 states and US territories. This dataset in particular was posted on 01.26.2023.\n\n\n\n\n# Loading the raw data set.\n\nRawNNHSS <- readr:: read_csv(\"data/NNDSS_Weekly_Data.csv\")\n\nRows: 424130 Columns: 16\n── Column specification ────────────────────────────────────────────────────────\nDelimiter: \",\"\nchr (9): Reporting Area, Label, Current week, flag, Previous 52 weeks Max, f...\ndbl (7): Current MMWR Year, MMWR WEEK, Current week, Previous 52 week Max, C...\n\nℹ Use `spec()` to retrieve the full column specification for this data.\nℹ Specify the column types or set `show_col_types = FALSE` to quiet this message."
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "My website and data analysis portfolio",
+    "section": "",
+    "text": "Hello\n\nAnd hello again\nWelcome to my website and data analysis portfolio.\n\nPlease use the Menu Bar above to look around.\nHave fun!"
+  },
+  {
+    "objectID": "tidytuesday_exercise.html",
+    "href": "tidytuesday_exercise.html",
+    "title": "Tidy Tuesday Exercise",
+    "section": "",
+    "text": "Placeholder file for the future Tidy Tuesday exercise."
+  },
+  {
+    "objectID": "visualization_exercise.html",
+    "href": "visualization_exercise.html",
+    "title": "Visualization Exercise",
+    "section": "",
+    "text": "Placeholder file for the future visualization exercise."
   }
 ]

@@ -1,0 +1,28 @@
+---
+title: "dataanalysis_exercise"
+format:
+  html:
+    theme: default
+---
+
+# Data Analysis Exercise (Module 4 Exercise)
+
+
+## Description of Dataset
+
+This data comes from the Centers for Disease Control and Prevention's National
+Notifiable Diseases Surveillance System (NNDSS). Every week the CDC posts 
+data received from the NNDSS system by the 50 states and US territories.
+This dataset in particular was posted on 01.26.2023. 
+
+
+
+## Load and clean the data...
+```{r}
+# Loading the raw data set.
+
+RawNNHSS <- readr:: read_csv("data/NNDSS_Weekly_Data.csv")
+
+
+```
+
