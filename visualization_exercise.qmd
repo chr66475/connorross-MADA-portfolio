@@ -5,4 +5,128 @@ output:
     toc: FALSE
 ---
 
-Placeholder file for the future visualization exercise.
+# Overview
+
+For this exercise, I wanted to create an interactive 'heat' map such as the one found [here](https://rstudio.github.io/leaflet/choropleths.html). (Or see photo below):
+
+![](data/file_show)
+
+## Load Packages
+
+```{r}
+library(maps)
+library(sf)
+library(ggplot2)
+library(tmap)
+library(tmaptools)
+library(leaflet)
+library(dplyr)
+library(tidyverse)
+```
+
+## Load the Data
+
+Description of Dataset:
+
+This data comes from the Centers for Disease Control and Prevention's National Notifiable Diseases Surveillance System (NNDSS). Every week the CDC posts data received from the NNDSS system by the 50 states and US territories. This data set in particular was posted on 01.26.2023.
+
+```{r}
+
+# Loading the raw data set.
+RawNNDSS <- readr:: read_csv("data/NNDSS_Weekly_Data.csv")
+
+## Let's take a look...
+summary(RawNNDSS)
+str(RawNNDSS)
+
+```
+
+## Clean the Data
+
+```{r}
+
+# Don't want to see anything outside the continental US...
+
+NoLocation <- c("DISTRICT OF COLUMBIA", "NEW YORK CITY", "AMERICAN SAMOA", 
+                          "U.S. VIRGIN ISLANDS", "NORTHERN MARIANA ISLANDS", 
+                          "GUAM", "PUERTO RICO")
+
+USChlamydia <- RawNNDSS %>%
+  filter(Label == "Chlamydia trachomatis infection" 
+         & `Current MMWR Year` == 2022)
+
+USChlamydia <- USChlamydia[ ! USChlamydia$LOCATION1 %in% NoLocation, ]
+
+
+
+
+# Grouping/sum by state...
+
+For_map <- USChlamydia %>%
+  group_by(LOCATION1) %>%
+  summarise(Freq = sum(`Current week`, na.rm = TRUE))
+
+
+
+# Renaming...prepping for join
+
+For_map <- For_map %>%
+  mutate(region = LOCATION1)
+For_map <- For_map %>%
+  select(region, Freq)
+
+
+
+# Map Data
+
+MainStates <- map_data("state")
+
+
+
+# Renaming...prepping for join
+
+MainStates$region <- str_to_upper(MainStates$region)
+
+
+
+```
+
+## Creating the plot(s)...
+
+```{r}
+
+# Generating Plot 
+
+ggplot() +
+  geom_polygon(data = MainStates, aes(x = long, y = lat, group=group),
+               color = "black", fill = "lightblue")
+MergedStates <- inner_join(MainStates, For_map, by = "region")
+Map1 <- ggplot()
+
+Map1 <- Map1 + geom_polygon(data = MergedStates, aes(x = long, y = lat, group = group,
+                                               fill = Freq), color = "black", linewidth = 0.2)
+
+
+# View Map 1
+Map1
+
+
+# Kind of want a different color scheme
+Map2 <- Map1 +scale_fill_gradient(name = "Cases of Chlamydia Reported in 2022",
+                                  low = "yellow", high = "red",
+                                   na.value = "grey") +
+  theme(axis.text.x = element_blank(),
+        axis.text.y =  element_blank(),
+        axis.ticks =  element_blank(),
+        axis.title.y = element_blank(),
+        axis.title.x = element_blank(),
+        rect = element_blank())
+
+# View Map 2
+Map2
+
+```
+
+![](data/file_show2)
+
+While this isn't the graph or the outcome that I would've liked. I did learn a lot about how the data are structured to generate these maps and merging them with your dataset. Initially, I was trying to use the leaflet() package and other variations that had a lot of easy-to-create interactive components, however, this was very difficult for me to do (I've removed my trials with these and kept the final. Trust me, you don't want to see the mess I put myself through just to complete this assignment. Even if you wanted to see it, I'm still mad about it so it had to go). Now that I have a finished product and saw it through to the end, I think I'm going to try to create my initial vision I had. Completing this version brought some new details to light that would've helped to know when I first started this.

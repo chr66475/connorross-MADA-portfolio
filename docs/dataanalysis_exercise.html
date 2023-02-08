@@ -223,13 +223,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>── Attaching packages ─────────────────────────────────────── tidyverse 1.3.2 ──
-✔ ggplot2 3.4.0      ✔ purrr   0.3.5 
-✔ tibble  3.1.8      ✔ dplyr   1.0.10
-✔ tidyr   1.2.1      ✔ stringr 1.5.0 
-✔ readr   2.1.3      ✔ forcats 0.5.2 </code></pre>
+✔ ggplot2 3.4.0     ✔ purrr   1.0.1
+✔ tibble  3.1.8     ✔ dplyr   1.1.0
+✔ tidyr   1.3.0     ✔ stringr 1.5.0
+✔ readr   2.1.3     ✔ forcats 1.0.0</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: package 'ggplot2' was built under R version 4.2.2</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'tidyr' was built under R version 4.2.2</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: package 'readr' was built under R version 4.2.2</code></pre>
@@ -244,12 +247,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <pre><code>Warning: package 'stringr' was built under R version 4.2.2</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'forcats' was built under R version 4.2.2</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
 <pre><code>── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ✖ dplyr::filter() masks stats::filter()
 ✖ dplyr::lag()    masks stats::lag()</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Loading the raw data set.</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>RawNNDSS <span class="ot">&lt;-</span> readr<span class="sc">::</span> <span class="fu">read_csv</span>(<span class="st">"data/NNDSS_Weekly_Data.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Loading the raw data set.</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>RawNNDSS <span class="ot">&lt;-</span> readr<span class="sc">::</span> <span class="fu">read_csv</span>(<span class="st">"data/NNDSS_Weekly_Data.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Rows: 424130 Columns: 16
 ── Column specification ────────────────────────────────────────────────────────
@@ -260,8 +266,8 @@ dbl (7): Current MMWR Year, MMWR WEEK, Current week, Previous 52 week Max, C...
 ℹ Use `spec()` to retrieve the full column specification for this data.
 ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Let's take a look...</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(RawNNDSS)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Let's take a look...</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(RawNNDSS)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> Reporting Area     Current MMWR Year   MMWR WEEK        Label          
  Length:424130      Min.   :2022      Min.   : 1.00   Length:424130     
@@ -312,7 +318,7 @@ dbl (7): Current MMWR Year, MMWR WEEK, Current week, Previous 52 week Max, C...
  Max.   :2.023e+10                     
                                        </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(RawNNDSS)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(RawNNDSS)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>spc_tbl_ [424,130 × 16] (S3: spec_tbl_df/tbl_df/tbl/data.frame)
  $ Reporting Area                         : chr [1:424130] "US RESIDENTS" "NEW ENGLAND" "CONNECTICUT" "MAINE" ...
@@ -352,10 +358,10 @@ dbl (7): Current MMWR Year, MMWR WEEK, Current week, Previous 52 week Max, C...
   .. )
  - attr(*, "problems")=&lt;externalptr&gt; </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="do">## I'm kind of only interested in Georgia since I live here now...</span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>GeorgiaNNDSS <span class="ot">&lt;-</span> RawNNDSS <span class="sc">%&gt;%</span></span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="st">`</span><span class="at">Reporting Area</span><span class="st">`</span> <span class="sc">==</span> <span class="st">"GEORGIA"</span>)</span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(GeorgiaNNDSS)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="do">## I'm kind of only interested in Georgia since I live here now...</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>GeorgiaNNDSS <span class="ot">&lt;-</span> RawNNDSS <span class="sc">%&gt;%</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="st">`</span><span class="at">Reporting Area</span><span class="st">`</span> <span class="sc">==</span> <span class="st">"GEORGIA"</span>)</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(GeorgiaNNDSS)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> Reporting Area     Current MMWR Year   MMWR WEEK        Label          
  Length:6059        Min.   :2022      Min.   : 1.00   Length:6059       
@@ -406,7 +412,7 @@ dbl (7): Current MMWR Year, MMWR WEEK, Current week, Previous 52 week Max, C...
  Max.   :2.023e+10                     
                                        </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(GeorgiaNNDSS)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(GeorgiaNNDSS)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>spc_tbl_ [6,059 × 16] (S3: spec_tbl_df/tbl_df/tbl/data.frame)
  $ Reporting Area                         : chr [1:6059] "GEORGIA" "GEORGIA" "GEORGIA" "GEORGIA" ...
@@ -446,31 +452,31 @@ dbl (7): Current MMWR Year, MMWR WEEK, Current week, Previous 52 week Max, C...
   .. )
  - attr(*, "problems")=&lt;externalptr&gt; </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="do">## What diseases DID Georgia from 2022 until now...</span></span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>currentweek <span class="ot">&lt;-</span> GeorgiaNNDSS <span class="sc">%&gt;%</span></span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="st">`</span><span class="at">Current MMWR Year</span><span class="st">`</span> <span class="sc">&gt;=</span> <span class="dv">2022</span> <span class="sc">&amp;</span> <span class="st">`</span><span class="at">Current week</span><span class="st">`</span> <span class="sc">!=</span> <span class="st">'NA'</span>)</span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="do">## Ehhhh let's get rid of 2022 for the sake of clear MMWR weeks...</span></span>
-<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>currentweek <span class="ot">&lt;-</span> GeorgiaNNDSS <span class="sc">%&gt;%</span></span>
-<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="st">`</span><span class="at">Current MMWR Year</span><span class="st">`</span> <span class="sc">==</span> <span class="dv">2022</span> <span class="sc">&amp;</span> <span class="st">`</span><span class="at">Current week</span><span class="st">`</span> <span class="sc">!=</span> <span class="st">'NA'</span>)</span>
-<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a><span class="do">## Lets take a look at what diseases were MOST reported...</span></span>
-<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>diseaseincidence <span class="ot">&lt;-</span> currentweek <span class="sc">%&gt;%</span></span>
-<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Label, <span class="st">`</span><span class="at">MMWR WEEK</span><span class="st">`</span>,<span class="st">`</span><span class="at">Current week</span><span class="st">`</span>) </span>
-<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a><span class="do">## Closer...</span></span>
-<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>diseaseincidence1 <span class="ot">&lt;-</span> currentweek <span class="sc">%&gt;%</span></span>
-<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Label, <span class="st">`</span><span class="at">Current week</span><span class="st">`</span>)</span>
-<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a><span class="do">## Almost there...</span></span>
-<span id="cb20-18"><a href="#cb20-18" aria-hidden="true" tabindex="-1"></a>diseaseincidence1 <span class="ot">&lt;-</span> diseaseincidence1 <span class="sc">%&gt;%</span></span>
-<span id="cb20-19"><a href="#cb20-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Label) <span class="sc">%&gt;%</span></span>
-<span id="cb20-20"><a href="#cb20-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">Freq =</span> <span class="fu">sum</span>(<span class="st">`</span><span class="at">Current week</span><span class="st">`</span>))</span>
-<span id="cb20-21"><a href="#cb20-21" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb20-22"><a href="#cb20-22" aria-hidden="true" tabindex="-1"></a><span class="do">## Finally top ten have been narrowed down!</span></span>
-<span id="cb20-23"><a href="#cb20-23" aria-hidden="true" tabindex="-1"></a>diseaseincidence1 <span class="ot">&lt;-</span> diseaseincidence1 <span class="sc">%&gt;%</span></span>
-<span id="cb20-24"><a href="#cb20-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(Freq)) <span class="sc">%&gt;%</span></span>
-<span id="cb20-25"><a href="#cb20-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="do">## What diseases DID Georgia from 2022 until now...</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>currentweek <span class="ot">&lt;-</span> GeorgiaNNDSS <span class="sc">%&gt;%</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="st">`</span><span class="at">Current MMWR Year</span><span class="st">`</span> <span class="sc">&gt;=</span> <span class="dv">2022</span> <span class="sc">&amp;</span> <span class="st">`</span><span class="at">Current week</span><span class="st">`</span> <span class="sc">!=</span> <span class="st">'NA'</span>)</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a><span class="do">## Ehhhh let's get rid of 2023 for the sake of clear MMWR weeks...</span></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>currentweek <span class="ot">&lt;-</span> GeorgiaNNDSS <span class="sc">%&gt;%</span></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="st">`</span><span class="at">Current MMWR Year</span><span class="st">`</span> <span class="sc">==</span> <span class="dv">2022</span> <span class="sc">&amp;</span> <span class="st">`</span><span class="at">Current week</span><span class="st">`</span> <span class="sc">!=</span> <span class="st">'NA'</span>)</span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a><span class="do">## Lets take a look at what diseases were MOST reported...</span></span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>diseaseincidence <span class="ot">&lt;-</span> currentweek <span class="sc">%&gt;%</span></span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Label, <span class="st">`</span><span class="at">MMWR WEEK</span><span class="st">`</span>,<span class="st">`</span><span class="at">Current week</span><span class="st">`</span>) </span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a><span class="do">## Closer...</span></span>
+<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a>diseaseincidence1 <span class="ot">&lt;-</span> currentweek <span class="sc">%&gt;%</span></span>
+<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Label, <span class="st">`</span><span class="at">Current week</span><span class="st">`</span>)</span>
+<span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-17"><a href="#cb22-17" aria-hidden="true" tabindex="-1"></a><span class="do">## Almost there...</span></span>
+<span id="cb22-18"><a href="#cb22-18" aria-hidden="true" tabindex="-1"></a>diseaseincidence1 <span class="ot">&lt;-</span> diseaseincidence1 <span class="sc">%&gt;%</span></span>
+<span id="cb22-19"><a href="#cb22-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Label) <span class="sc">%&gt;%</span></span>
+<span id="cb22-20"><a href="#cb22-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">Freq =</span> <span class="fu">sum</span>(<span class="st">`</span><span class="at">Current week</span><span class="st">`</span>))</span>
+<span id="cb22-21"><a href="#cb22-21" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb22-22"><a href="#cb22-22" aria-hidden="true" tabindex="-1"></a><span class="do">## Finally top ten have been narrowed down!</span></span>
+<span id="cb22-23"><a href="#cb22-23" aria-hidden="true" tabindex="-1"></a>diseaseincidence1 <span class="ot">&lt;-</span> diseaseincidence1 <span class="sc">%&gt;%</span></span>
+<span id="cb22-24"><a href="#cb22-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(Freq)) <span class="sc">%&gt;%</span></span>
+<span id="cb22-25"><a href="#cb22-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="im-a-curious-guy-so-im-going-to-plot-diseases-reported-over-time-and-a" class="level2">
@@ -479,40 +485,40 @@ dbl (7): Current MMWR Year, MMWR WEEK, Current week, Previous 52 week Max, C...
 <section id="barplot-to-see-the-total-burden-of-disease-in-georgia-in-2022" class="level2">
 <h2 class="anchored" data-anchor-id="barplot-to-see-the-total-burden-of-disease-in-georgia-in-2022">barplot to see the total burden of disease in Georgia in 2022…</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="do">## You'll need two files for this...</span></span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(diseaseincidence, <span class="at">file =</span> <span class="st">"data/disease_incidence_time.rds"</span>)</span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(diseaseincidence1, <span class="at">file =</span> <span class="st">"data/disease_freq.rds"</span>)</span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the thingy...</span></span>
-<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Disease incidence over time...</span></span>
-<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>diseaseincidence <span class="sc">%&gt;%</span></span>
-<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> <span class="st">`</span><span class="at">MMWR WEEK</span><span class="st">`</span>, <span class="at">y =</span> <span class="st">`</span><span class="at">Current week</span><span class="st">`</span>, <span class="at">color =</span> Label)) <span class="sc">+</span></span>
-<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"MMWR Week"</span>, <span class="at">y =</span> <span class="st">"Incidence of Disease"</span>, <span class="at">title =</span> </span>
-<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a>                       <span class="st">"Disease Incidence Over Time (by Epi Week)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="do">## You'll need two files for this...</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(diseaseincidence, <span class="at">file =</span> <span class="st">"data/disease_incidence_time.rds"</span>)</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(diseaseincidence1, <span class="at">file =</span> <span class="st">"data/disease_freq.rds"</span>)</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the thingy...</span></span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Disease incidence over time...</span></span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>diseaseincidence <span class="sc">%&gt;%</span></span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> <span class="st">`</span><span class="at">MMWR WEEK</span><span class="st">`</span>, <span class="at">y =</span> <span class="st">`</span><span class="at">Current week</span><span class="st">`</span>, <span class="at">color =</span> Label)) <span class="sc">+</span></span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"MMWR Week"</span>, <span class="at">y =</span> <span class="st">"Incidence of Disease"</span>, <span class="at">title =</span> </span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a>                       <span class="st">"Disease Incidence Over Time (by Epi Week)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="dataanalysis_exercise_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" width="672"></p>
 </div>
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Wooooo that plot was extremely long, I'm going to remove the Legend to make</span></span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="co"># it easier to see...</span></span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>diseaseincidence <span class="sc">%&gt;%</span></span>
-<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> <span class="st">`</span><span class="at">MMWR WEEK</span><span class="st">`</span>, <span class="at">y =</span> <span class="st">`</span><span class="at">Current week</span><span class="st">`</span>, <span class="at">color =</span> Label)) <span class="sc">+</span></span>
-<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"MMWR Week"</span>, <span class="at">y =</span> <span class="st">"Incidence of Disease"</span>, <span class="at">title =</span> </span>
-<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>                       <span class="st">"Disease Incidence Over Time (by Epi Week of 2022)"</span>) <span class="sc">+</span></span>
-<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Wooooo that plot was extremely long, I'm going to remove the Legend to make</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="co"># it easier to see...</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>diseaseincidence <span class="sc">%&gt;%</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> <span class="st">`</span><span class="at">MMWR WEEK</span><span class="st">`</span>, <span class="at">y =</span> <span class="st">`</span><span class="at">Current week</span><span class="st">`</span>, <span class="at">color =</span> Label)) <span class="sc">+</span></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"MMWR Week"</span>, <span class="at">y =</span> <span class="st">"Incidence of Disease"</span>, <span class="at">title =</span> </span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>                       <span class="st">"Disease Incidence Over Time (by Epi Week of 2022)"</span>) <span class="sc">+</span></span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="dataanalysis_exercise_files/figure-html/unnamed-chunk-2-2.png" class="img-fluid" width="672"></p>
 </div>
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Disease Frequency in 2022</span></span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>diseaseincidence1 <span class="sc">%&gt;%</span></span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(Label, <span class="sc">-</span>Freq), <span class="at">y =</span> Freq, <span class="at">fill =</span> Label)) <span class="sc">+</span> </span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">'identity'</span>) <span class="sc">+</span> </span>
-<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_discrete</span>(<span class="at">labels =</span> <span class="cf">function</span>(Label) <span class="fu">str_wrap</span>(Label, <span class="at">width =</span> <span class="dv">6</span>)) <span class="sc">+</span></span>
-<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>) <span class="sc">+</span> <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> Freq), <span class="at">vjust =</span> <span class="dv">0</span>) <span class="sc">+</span></span>
-<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Disease Frequency"</span>, <span class="at">y =</span> <span class="st">"Disease Reported"</span>, </span>
-<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">"Frequency of Top Ten Reported Disease in Georgia in NNDSS in 2022"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Disease Frequency in 2022</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>diseaseincidence1 <span class="sc">%&gt;%</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(Label, <span class="sc">-</span>Freq), <span class="at">y =</span> Freq, <span class="at">fill =</span> Label)) <span class="sc">+</span> </span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">'identity'</span>) <span class="sc">+</span> </span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_discrete</span>(<span class="at">labels =</span> <span class="cf">function</span>(Label) <span class="fu">str_wrap</span>(Label, <span class="at">width =</span> <span class="dv">6</span>)) <span class="sc">+</span></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>) <span class="sc">+</span> <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> Freq), <span class="at">vjust =</span> <span class="dv">0</span>) <span class="sc">+</span></span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Disease Frequency"</span>, <span class="at">y =</span> <span class="st">"Disease Reported"</span>, </span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">"Frequency of Top Ten Reported Disease in Georgia in NNDSS in 2022"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="dataanalysis_exercise_files/figure-html/unnamed-chunk-2-3.png" class="img-fluid" width="672"></p>
 </div>
@@ -523,18 +529,18 @@ dbl (7): Current MMWR Year, MMWR WEEK, Current week, Previous 52 week Max, C...
 <p>Everything from here on out was done by Katie Wells</p>
 <p>Hi Connor! :) You already did some pretty cool analysis above, but I’m interested in the 10 least commonly reported infectious diseases in Georgia in this time period. Here we go!</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>top_ten <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">"data/disease_freq.rds"</span>)</span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>all_ga <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">"data/disease_incidence_time.rds"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>top_ten <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">"data/disease_freq.rds"</span>)</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>all_ga <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">"data/disease_incidence_time.rds"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co">#make a new dataset with the 10 least reported diseases</span></span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>least_incidence <span class="ot">&lt;-</span> all_ga <span class="sc">%&gt;%</span></span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Label) <span class="sc">%&gt;%</span></span>
-<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">Freq =</span> <span class="fu">sum</span>(<span class="st">`</span><span class="at">Current week</span><span class="st">`</span>)) <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(Freq) <span class="sc">%&gt;%</span></span>
-<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">10</span>)</span>
-<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a><span class="co">#let's take a look</span></span>
-<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(least_incidence)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co">#make a new dataset with the 10 least reported diseases</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>least_incidence <span class="ot">&lt;-</span> all_ga <span class="sc">%&gt;%</span></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Label) <span class="sc">%&gt;%</span></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">Freq =</span> <span class="fu">sum</span>(<span class="st">`</span><span class="at">Current week</span><span class="st">`</span>)) <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(Freq) <span class="sc">%&gt;%</span></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">10</span>)</span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a><span class="co">#let's take a look</span></span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(least_incidence)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 10 × 2
    Label                                                                    Freq
@@ -553,29 +559,29 @@ dbl (7): Current MMWR Year, MMWR WEEK, Current week, Previous 52 week Max, C...
 </div>
 <p>Cool! I’m glad to see that these diseases have a very low frequency in Georgia (but a little concerned that they might be hanging around). Let’s put these in a bar graph to visualize it better.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co">#graphing the 10 least reported; I'll keep the same theme as above for cohesiveness</span></span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>least_incidence <span class="sc">%&gt;%</span></span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(Label, <span class="sc">-</span>Freq), <span class="at">y =</span> Freq, <span class="at">fill =</span> Label)) <span class="sc">+</span> </span>
-<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">'identity'</span>) <span class="sc">+</span> </span>
-<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_discrete</span>(<span class="at">labels =</span> <span class="cf">function</span>(Label) <span class="fu">str_wrap</span>(Label, <span class="at">width =</span> <span class="dv">6</span>)) <span class="sc">+</span></span>
-<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>) <span class="sc">+</span> <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> Freq), <span class="at">vjust =</span> <span class="dv">0</span>) <span class="sc">+</span></span>
-<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Disease"</span>, <span class="at">y =</span> <span class="st">"Cases Reported"</span>, </span>
-<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">"Frequency of Ten Least Reported Diseases in Georgia in NNDSS in 2022"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co">#graphing the 10 least reported; I'll keep the same theme as above for cohesiveness</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>least_incidence <span class="sc">%&gt;%</span></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(Label, <span class="sc">-</span>Freq), <span class="at">y =</span> Freq, <span class="at">fill =</span> Label)) <span class="sc">+</span> </span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">'identity'</span>) <span class="sc">+</span> </span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_discrete</span>(<span class="at">labels =</span> <span class="cf">function</span>(Label) <span class="fu">str_wrap</span>(Label, <span class="at">width =</span> <span class="dv">6</span>)) <span class="sc">+</span></span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>) <span class="sc">+</span> <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> Freq), <span class="at">vjust =</span> <span class="dv">0</span>) <span class="sc">+</span></span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Disease"</span>, <span class="at">y =</span> <span class="st">"Cases Reported"</span>, </span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">"Frequency of Ten Least Reported Diseases in Georgia in NNDSS in 2022"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="dataanalysis_exercise_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>Also cool! I wonder when these reports occurred in relation to MMWR weeks…</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co">#filter the all_ga data with the 10 least reported I found earlier</span></span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>all_ga2 <span class="ot">=</span> <span class="fu">filter</span>(all_ga, Label <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Haemophilus influenzae, invasive disease, Age &lt;5 years, Unknown serotype"</span>, <span class="st">"Invasive pneumococcal disease, age &lt;5 years, Confirmed"</span>, <span class="st">"Listeriosis, Confirmed"</span>, <span class="st">"Mumps"</span>, <span class="st">"Hepatitis, B, acute"</span>, <span class="st">"Tuberculosis"</span>, <span class="st">"Pertussis"</span>, <span class="st">"Haemophilus influenzae, invasive disease, All ages, all serotypes"</span>, <span class="st">"Shiga toxin-producing Escherichia coli (STEC)"</span>, <span class="st">"Varicella morbidity"</span>))</span>
-<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a><span class="co">#graph a scatterplot, see color legend above for particular disease</span></span>
-<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>all_ga2 <span class="sc">%&gt;%</span></span>
-<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> <span class="st">`</span><span class="at">MMWR WEEK</span><span class="st">`</span>, <span class="at">y =</span> <span class="st">`</span><span class="at">Current week</span><span class="st">`</span>, <span class="at">color =</span> Label)) <span class="sc">+</span></span>
-<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"MMWR Week"</span>, <span class="at">y =</span> <span class="st">"Incidence of Disease"</span>, <span class="at">title =</span> </span>
-<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>                       <span class="st">"Incidence of 10 Least Reported Diseases in Georgia Over Time"</span>) <span class="sc">+</span></span>
-<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co">#filter the all_ga data with the 10 least reported I found earlier</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>all_ga2 <span class="ot">=</span> <span class="fu">filter</span>(all_ga, Label <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Haemophilus influenzae, invasive disease, Age &lt;5 years, Unknown serotype"</span>, <span class="st">"Invasive pneumococcal disease, age &lt;5 years, Confirmed"</span>, <span class="st">"Listeriosis, Confirmed"</span>, <span class="st">"Mumps"</span>, <span class="st">"Hepatitis, B, acute"</span>, <span class="st">"Tuberculosis"</span>, <span class="st">"Pertussis"</span>, <span class="st">"Haemophilus influenzae, invasive disease, All ages, all serotypes"</span>, <span class="st">"Shiga toxin-producing Escherichia coli (STEC)"</span>, <span class="st">"Varicella morbidity"</span>))</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a><span class="co">#graph a scatterplot, see color legend above for particular disease</span></span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>all_ga2 <span class="sc">%&gt;%</span></span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> <span class="st">`</span><span class="at">MMWR WEEK</span><span class="st">`</span>, <span class="at">y =</span> <span class="st">`</span><span class="at">Current week</span><span class="st">`</span>, <span class="at">color =</span> Label)) <span class="sc">+</span></span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"MMWR Week"</span>, <span class="at">y =</span> <span class="st">"Incidence of Disease"</span>, <span class="at">title =</span> </span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>                       <span class="st">"Incidence of 10 Least Reported Diseases in Georgia Over Time"</span>) <span class="sc">+</span></span>
+<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="dataanalysis_exercise_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
 </div>

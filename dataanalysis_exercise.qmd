@@ -39,7 +39,7 @@ str(GeorgiaNNDSS)
 currentweek <- GeorgiaNNDSS %>%
   filter(`Current MMWR Year` >= 2022 & `Current week` != 'NA')
 
-## Ehhhh let's get rid of 2022 for the sake of clear MMWR weeks...
+## Ehhhh let's get rid of 2023 for the sake of clear MMWR weeks...
 currentweek <- GeorgiaNNDSS %>%
   filter(`Current MMWR Year` == 2022 & `Current week` != 'NA')
 
