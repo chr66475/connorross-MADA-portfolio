@@ -9,7 +9,7 @@ output:
 
 For this exercise, I wanted to create an interactive 'heat' map such as the one found [here](https://rstudio.github.io/leaflet/choropleths.html). (Or see photo below):
 
-![](data/file_show)
+![](data/Capture.PNG)
 
 ## Load Packages
 
