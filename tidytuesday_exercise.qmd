@@ -5,4 +5,139 @@ output:
     toc: FALSE
 ---
 
-Placeholder file for the future Tidy Tuesday exercise.
+
+ 
+## Installing Packages:
+
+install.packages("tidytuesdayR")
+
+
+
+## Read in the Data:
+```{r}
+# Got to have that tidyverse...
+
+library(tidyverse)
+
+
+
+# Two options for reading in data
+
+
+## Read in with tidytuesdayR
+
+### Either ISO-8601 date or year/week works!
+
+# tuesdata <- tidytuesdayR::tt_load('2023-02-14')
+# tuesdata <- tidytuesdayR::tt_load(2023, week = 7)
+
+
+
+# or read in manually:
+
+raw_age_gaps <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2023/2023-02-14/age_gaps.csv')
+
+
+
+# I want to make sure I have a copy of the raw dataset...
+
+write_csv(raw_age_gaps, file = "data/raw_age_graps.csv")
+
+
+# Let's take a look...
+
+str(raw_age_gaps)
+
+glimpse(raw_age_gaps)
+
+summary(raw_age_gaps)
+
+
+
+```
+Time to play with data...
+```{r}
+
+library(ggplot2)
+library(plotly)
+
+Graph_Char1Gender <- raw_age_gaps %>%
+  ggplot(mapping = aes(x = character_1_gender, fill = character_1_gender)) +
+  geom_bar() + 
+  labs(title = "Gender Counts in Character 1", x = "Gender (Male/Female)", y = "Count", legend = "Gender") +
+  geom_text(aes(label = ..count..), stat = "count", vjust = 0) +
+  scale_fill_discrete(name = "Gender") +
+  theme_dark()
+
+Graph_Char1Gender <- ggplotly(Graph_Char1Gender)
+Graph_Char1Gender
+
+
+
+Graph_Char2Gender <- raw_age_gaps %>%
+  ggplot(mapping = aes(x = character_2_gender, fill = character_2_gender)) +
+  geom_bar() + 
+  labs(title = "Gender Counts in Character 2", x = "Gender (Male/Female)", y = "Count", legend = "Gender") +
+  geom_text(aes(label = ..count..), stat = "count", vjust = 0) +
+  scale_fill_discrete(name = "Gender") +
+  theme_dark()
+
+Graph_Char2Gender <- ggplotly(Graph_Char2Gender)
+Graph_Char2Gender
+
+
+
+# I wonder what happens to age difference over the years...
+
+Graph_AgeDiffReleaseY <- raw_age_gaps %>%
+  ggplot(mapping = aes(x = release_year, y = age_difference, color = release_year)) +
+  geom_point() + 
+  labs(title = "Age Difference Over the Years", x = "Release Year", y = "Age Difference (In Years)") +
+  theme_dark()
+
+Graph_AgeDiffReleaseY <- ggplotly(Graph_AgeDiffReleaseY)
+Graph_AgeDiffReleaseY
+
+
+
+# I want to see the AVERAGE age difference over the years...
+
+library(tidyverse)
+revised_age_gaps <- raw_age_gaps %>%
+  dplyr::select(release_year, age_difference) %>%
+  group_by(release_year) %>%
+  summarize(mean = mean(age_difference))
+
+write_csv(revised_age_gaps, file = "data/revised_age_gaps.csv")
+
+
+
+# Now lets visualize...
+
+library(ggplot2)
+library(plotly)
+library(RColorBrewer)
+Graph_AVGAgeDiffReleaseY <- revised_age_gaps %>%
+  ggplot(mapping = aes(x = release_year, y = mean)) +
+  geom_area(fill = "LightGreen") + 
+  geom_line(color = "DarkGreen") +
+  labs(title = "Average Age Difference Over the Years", x = "Release Year", y = "Age Difference (In Years)") +
+  theme_dark()
+
+Graph_AVGAgeDiffReleaseY <- ggplotly(Graph_AVGAgeDiffReleaseY)
+Graph_AVGAgeDiffReleaseY
+
+
+
+```
+
+
+
+
+
+
+
+
+
+
+
