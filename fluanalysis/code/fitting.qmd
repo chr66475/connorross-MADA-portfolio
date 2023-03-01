@@ -5,7 +5,11 @@ format:
     theme: darkly
 ---
 
+
+
 ## Load Data
+
+Model Fitting (1)
 
 ```{r}
 
@@ -22,27 +26,42 @@ SympActAny_new <- readRDS(here("fluanalysis", "data", "processed_data", "SympAct
 ```
 
 
+
 ## Linear Model
+Prepares model and engine as laid out in 'Get Started - Build a model tutorial' on tidymodels website.
 
 ```{r}
+# Load packages
+
 library(tidymodels)
 library(performance)
 library(vip)
 
+#Prepare linear model with engine
 linear_reg()
 
 lm_mod <- linear_reg() %>%
   set_engine("lm")
+```
 
+
+## Start Fitting Linear Model
+Model Fitting (2 - 4)
+
+
+```{r}
+# Fitting model (2)
 lm_fit1 <- lm_mod %>%
   fit(BodyTemp ~ RunnyNose, data = SympActAny_new)
 lm_fit1
 
+# Check Model
 glance(lm_fit1)
 tidy(lm_fit1)
 check_model(lm_fit1$fit)
 
-# Generated a function that will apply this for me...
+
+# Generated a function that will apply this for me (Univar)...
 LM_FUN_BT <- function(x) {
   lm_mod %>%
     fit(BodyTemp ~ {{x}}, data = SympActAny_new)
@@ -61,44 +80,67 @@ lm_all <- lm_mod %>%
 lm_all
 
 
-
+# Check Multivar
 glance(lm_all)
 tidy(lm_all)
 check_model(lm_all$fit)
 
-
+# Compare performance
 compare_performance(lm_fit1, lm_all)
+```
 
+
+
+## Logistic Model with engine
+Prepares model and engine as laid out in 'Get Started - Build a model tutorial' on tidymodels website.
+
+```{r}
 ## Start GLM Logistic
 
 GLM_mod <- logistic_reg() %>%
   set_engine("glm")
 
+```
+
+
+## Start fitting Logistic Model
+
+Model fitting (5 - 7)
+
+```{r}
+# Fitting Model (5)
 GLM_fit1 <- GLM_mod %>%
   fit(Nausea ~ RunnyNose, data = SympActAny_new)
 GLM_fit1
 
+
+# Generate function to apply univar fit to across dataset
 GLM_FUN_NAS <- function(x) {
   GLM_mod %>%
     fit(Nausea ~ {{x}}, data = SympActAny_new)
 }
 
-#Univar
+# Apply function for Univar
 All_LOG <- lapply(SympActAny_new, GLM_FUN_NAS)
 
-#Multivar
+# Multivar (6)
 log_all <- GLM_mod %>%
   fit(Nausea ~ ., data = SympActAny_new)
 log_all
 
+# Check GLM_fit1 (Nausea v RunnyNose)
 glance(GLM_fit1)
 tidy(GLM_fit1)
 check_model(GLM_fit1$fit)
 
+# Multivar check
 glance(log_all)
 tidy(log_all)
 check_model(log_all$fit)
 
-
+# Compare performance (GLM_fit1 vs log_all
 compare_performance(GLM_fit1, log_all)
+
+
+
 ```
