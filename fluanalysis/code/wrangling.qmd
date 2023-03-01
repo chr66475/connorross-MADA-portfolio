@@ -1,0 +1,156 @@
+---
+title: "wrangling"
+format:
+  html:
+    theme: darkly
+---
+
+
+## Loading Packages and Raw Data
+```{r}
+# Loading packages
+setwd("../")
+library(tidyverse)
+library(here)
+
+
+# There were issues with importing the data file without the full path even after resetting my workingdirectory. Issue documented in '#I_have_a_question_or_need_help' Channel in course Slack on 02/28/2023 (see Kailin Chen thread)
+
+
+getwd()
+
+SympActAny_raw <- readRDS(file = "data/raw_data/SympAct_Any_Pos.Rda")
+
+# Check the data
+library(tidyverse)
+glimpse(SympActAny_raw)
+str(SympActAny_raw)
+
+
+```
+
+
+## Scrub-a-dub-dub
+```{r}
+
+# Let's tidy-up our data
+
+## Removing 'Score' 'Total' 'FluA' 'FluB' 'Dxname' 'Activity' as well as removing 'Unique.Visit' and any NAs
+
+SympActAny_new <- SympActAny_raw %>%
+  select(- (contains("Score") | contains("Total") | contains("FluA") | contains("FluB") | contains("DxName") | contains("Activity"))) %>%
+  select(!Unique.Visit) %>%
+  na.omit()
+
+### Check
+apply(SympActAny_new, 2, function(x) any(is.na(x)))
+glimpse(SympActAny_new)
+ncol(SympActAny_new)
+nrow(SympActAny_new)
+
+### 730 obs of 32 variables resulting
+
+# Save cleaned set 
+saveRDS(SympActAny_new, file = "../data/processed_data/SympActAny_new.rds")
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

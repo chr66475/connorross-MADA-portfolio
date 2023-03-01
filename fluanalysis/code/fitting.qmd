@@ -1,0 +1,104 @@
+---
+title: "fitting"
+format:
+  html:
+    theme: darkly
+---
+
+## Load Data
+
+```{r}
+
+setwd("../")
+
+library(tidyverse)
+library(here)
+
+getwd()
+
+SympActAny_new <- readRDS(here("fluanalysis", "data", "processed_data", "SympActAny_new.rds"))
+
+
+```
+
+
+## Linear Model
+
+```{r}
+library(tidymodels)
+library(performance)
+library(vip)
+
+linear_reg()
+
+lm_mod <- linear_reg() %>%
+  set_engine("lm")
+
+lm_fit1 <- lm_mod %>%
+  fit(BodyTemp ~ RunnyNose, data = SympActAny_new)
+lm_fit1
+
+glance(lm_fit1)
+tidy(lm_fit1)
+check_model(lm_fit1$fit)
+
+# Generated a function that will apply this for me...
+LM_FUN_BT <- function(x) {
+  lm_mod %>%
+    fit(BodyTemp ~ {{x}}, data = SympActAny_new)
+}
+
+LM_FUN_BT(SympActAny_new$RunnyNose)
+
+
+# Apply to all columns to produce list...(Univar)
+All_LIN <- lapply(SympActAny_new, LM_FUN_BT)
+
+
+# Multivar
+lm_all <- lm_mod %>%
+  fit(BodyTemp ~ . ,data = SympActAny_new)
+lm_all
+
+
+
+glance(lm_all)
+tidy(lm_all)
+check_model(lm_all$fit)
+
+
+compare_performance(lm_fit1, lm_all)
+
+## Start GLM Logistic
+
+GLM_mod <- logistic_reg() %>%
+  set_engine("glm")
+
+GLM_fit1 <- GLM_mod %>%
+  fit(Nausea ~ RunnyNose, data = SympActAny_new)
+GLM_fit1
+
+GLM_FUN_NAS <- function(x) {
+  GLM_mod %>%
+    fit(Nausea ~ {{x}}, data = SympActAny_new)
+}
+
+#Univar
+All_LOG <- lapply(SympActAny_new, GLM_FUN_NAS)
+
+#Multivar
+log_all <- GLM_mod %>%
+  fit(Nausea ~ ., data = SympActAny_new)
+log_all
+
+glance(GLM_fit1)
+tidy(GLM_fit1)
+check_model(GLM_fit1$fit)
+
+glance(log_all)
+tidy(log_all)
+check_model(log_all$fit)
+
+
+compare_performance(GLM_fit1, log_all)
+```

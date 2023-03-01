@@ -1,0 +1,202 @@
+---
+title: "exploration"
+format:
+  html:
+    theme: darkly
+---
+
+## EDA Revisited
+
+
+
+```{r}
+# Summary of Each Variable
+library(tidyverse)
+library(here)
+
+SympActAny_new <- readRDS(here("fluanalysis", "data", "processed_data", "SympActAny_new.rds"))
+
+summary(SympActAny_new)
+summary(SympActAny_new$Nausea)
+summary(SympActAny_new$BodyTemp)
+
+
+# I want to get an idea of what the data looks like for our two outcome variables individually and together...
+
+## Histogram BodyTemp
+Graph_HIST_BodyTemp <- SympActAny_new %>%
+  ggplot(mapping = aes(x = BodyTemp)) +
+  geom_histogram(color = "black", fill = "lightblue") + 
+  labs(title = "Body Temperature Histogram", x = "Body Temperature", y = "Count") +
+  theme_dark()
+Graph_HIST_BodyTemp
+
+## Density Plot BodyTemp
+Graph_DEN_BodyTemp <- SympActAny_new %>%
+  ggplot(mapping = aes(x = BodyTemp)) +
+  geom_density() + 
+  labs(title = "Body Temperature Histogram", x = "Body Temperature") +
+  theme_dark()
+Graph_DEN_BodyTemp
+
+## Barplot Nausea
+Graph_BAR_Nausea <- SympActAny_new %>%
+  ggplot(mapping = aes(x = Nausea, fill = Nausea)) + 
+  geom_bar() +
+  labs(title = "Nausea Symptoms", x = "Presence of Nausea (Y/N)", y = "Count") +
+  theme_dark()
+Graph_BAR_Nausea
+
+## Boxplot (BodyTemp v. Nausea)
+Graph_BOX_BTvN <- SympActAny_new %>%
+  ggplot(mapping = aes(x = Nausea, y = BodyTemp, fill = Nausea, shape = Nausea)) +
+  geom_boxplot() +
+  geom_jitter(size = 1) +
+  labs(title = "Boxplot Comparing Nausea and Body Temperature", x = "Nausea", y = "Body Temperature (in Fahrenheit)") +
+  theme_dark()
+Graph_BOX_BTvN
+
+
+
+```
+```{r}
+# I'm going to try and create a function comparing the factor variables to our continuous variable of interest... Just for practice...also I'm kind of curious 
+
+BOXfun <- function(x) {
+  ggplot(data = SympActAny_new, mapping = aes({{x}}, y = `BodyTemp`, fill = {{x}}, shape = {{x}})) +
+  geom_boxplot() +
+  geom_jitter(size = 1) +
+  theme_dark()
+}
+
+# Comparing other variables in the data to BodyTemp using boxplot
+
+Graph_BOX_BTvSLN <- BOXfun(SwollenLymphNodes)
+Graph_BOX_BTvSLN
+
+Graph_BOX_BTvCC <- BOXfun(ChestCongestion)
+Graph_BOX_BTvCC
+
+Graph_BOX_BTvCS <- BOXfun(ChillsSweats)
+Graph_BOX_BTvCS
+
+Graph_BOX_BTvNC <- BOXfun(NasalCongestion)
+Graph_BOX_BTvNC
+
+Graph_BOX_BTvC <- BOXfun(CoughYN)
+Graph_BOX_BTvC
+
+Graph_BOX_BTvS <- BOXfun(Sneeze)
+Graph_BOX_BTvS
+
+Graph_BOX_BTvF <- BOXfun(Fatigue)
+Graph_BOX_BTvF 
+
+Graph_BOX_BTvSF <- BOXfun(SubjectiveFever)
+Graph_BOX_BTvSF 
+
+Graph_BOX_BTvH <- BOXfun(Headache)
+Graph_BOX_BTvH
+
+Graph_BOX_BTvW <- BOXfun(Weakness)
+Graph_BOX_BTvW
+
+Graph_BOX_BTvM <- BOXfun(Myalgia)
+Graph_BOX_BTvM
+
+Graph_BOX_BTvRN <- BOXfun(RunnyNose)
+Graph_BOX_BTvRN
+
+Graph_BOX_BTvAP <- BOXfun(AbPain)
+Graph_BOX_BTvAP
+
+Graph_BOX_BTvCP <- BOXfun(ChestPain)
+Graph_BOX_BTvCP
+
+Graph_BOX_BTvD <- BOXfun(Diarrhea)
+Graph_BOX_BTvD
+
+
+Graph_BOX_BTvEP <- BOXfun(EyePn)
+Graph_BOX_BTvEP
+
+Graph_BOX_BTvI <- BOXfun(Insomnia)
+Graph_BOX_BTvI
+
+Graph_BOX_BTvIE <- BOXfun(ItchyEye)
+Graph_BOX_BTvIE
+
+Graph_BOX_BTvNa <- BOXfun(Nausea)
+Graph_BOX_BTvNa
+
+Graph_BOX_BTvEarpn <- BOXfun(EarPn)
+Graph_BOX_BTvEarpn
+
+Graph_BOX_BTvHear<- BOXfun(Hearing)
+Graph_BOX_BTvHear
+
+Graph_BOX_BTvPHAR <- BOXfun(Pharyngitis)
+Graph_BOX_BTvPHAR
+
+Graph_BOX_BTvBREA <- BOXfun(Breathless)
+Graph_BOX_BTvBREA
+
+Graph_BOX_BTvTooth <- BOXfun(ToothPn)
+Graph_BOX_BTvTooth
+
+Graph_BOX_BTvVis <- BOXfun(Vision)
+Graph_BOX_BTvVis
+
+Graph_BOX_BTvVom <- BOXfun(Vomit)
+Graph_BOX_BTvVom
+
+Graph_BOX_BTvWheez <- BOXfun(Wheeze)
+Graph_BOX_BTvWheez
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
