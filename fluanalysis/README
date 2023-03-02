@@ -1,0 +1,236 @@
+Author: Connor Ross
+Date: 03/01/2023
+Title: Flu Analysis
+
+
+Raw Data: SympAct_Any_Pos.Rda -> fluanalysis -> data -> raw_data
+  From: McKay, Brian et al. (2020), Virulence-mediated infectiousness and             activity trade-offs and their impact on transmission potential of             patients infected with influenza, Dryad, Dataset, 
+        https://doi.org/10.5061/dryad.51c59zw4v
+        
+Processed Data: SympActAny_new.rds -> fluanalysis -> data -> processed_data
+
+
+
+Main Folder: fluanalysis
+                code (folder)
+                    wrangling.qmd (file)
+                    exploration.qmd (file)
+                    fitting.qmd (file)
+                data (folder)
+                  processed_data (folder)
+                      SympActAny_new.rds (file)
+                  raw_data (folder)
+                      SympAct_Any_Pos.Rda (file)
+                README.md (file)
+
+
+Data Information (data (folder))
+  Raw Columns (SympActAny_raw -> raw_data):
+    [1] "DxName1"           "DxName2"           "DxName3"          
+    [4] "DxName4"           "DxName5"           "Unique.Visit"     
+    [7] "ActivityLevel"     "ActivityLevelF"    "SwollenLymphNodes"
+    [10] "ChestCongestion"   "ChillsSweats"      "NasalCongestion"  
+    [13] "CoughYN"           "Sneeze"            "Fatigue"          
+    [16] "SubjectiveFever"   "Headache"          "Weakness"         
+    [19] "WeaknessYN"        "CoughIntensity"    "CoughYN2"         
+    [22] "Myalgia"           "MyalgiaYN"         "RunnyNose"        
+    [25] "AbPain"            "ChestPain"         "Diarrhea"         
+    [28] "EyePn"             "Insomnia"          "ItchyEye"         
+    [31] "Nausea"            "EarPn"             "Hearing"          
+    [34] "Pharyngitis"       "Breathless"        "ToothPn"          
+    [37] "Vision"            "Vomit"             "Wheeze"           
+    [40] "BodyTemp"          "RapidFluA"         "RapidFluB"        
+    [43] "PCRFluA"           "PCRFluB"           "TransScore1"      
+    [46] "TransScore1F"      "TransScore2"       "TransScore2F"     
+    [49] "TransScore3"       "TransScore3F"      "TransScore4"      
+    [52] "TransScore4F"      "ImpactScore"       "ImpactScore2"     
+    [55] "ImpactScore3"      "ImpactScoreF"      "ImpactScore2F"    
+    [58] "ImpactScore3F"     "ImpactScoreFD"     "TotalSymp1"       
+    [61] "TotalSymp1F"       "TotalSymp2"        "TotalSymp3"
+  More info:
+    Rows: 735
+    Columns: 63
+      $ DxName1           <fct> "Influenza like illness - Clinical Dx", "Acut~
+      $ DxName2           <fct> NA, "Influenza like illness - Clinical Dx", "~
+      $ DxName3           <fct> NA, NA, NA, NA, NA, NA, NA, NA, "Fever, unspe~
+      $ DxName4           <fct> NA, NA, NA, NA, NA, NA, NA, NA, "Other fatigu~
+      $ DxName5           <fct> NA, NA, NA, NA, NA, NA, NA, NA, "Headache", N~
+      $ Unique.Visit      <chr> "340_17632125", "340_17794836", "342_17737773~
+      $ ActivityLevel     <int> 10, 6, 2, 2, 5, 3, 4, 0, 0, 5, 9, 1, 3, 6, 5,~
+      $ ActivityLevelF    <fct> 10, 6, 2, 2, 5, 3, 4, 0, 0, 5, 9, 1, 3, 6, 5,~
+      $ SwollenLymphNodes <fct> Yes, Yes, Yes, Yes, Yes, No, No, No, Yes, No,~
+      $ ChestCongestion   <fct> No, Yes, Yes, Yes, No, No, No, Yes, Yes, Yes,~
+      $ ChillsSweats      <fct> No, No, Yes, Yes, Yes, Yes, Yes, Yes, Yes, No~
+      $ NasalCongestion   <fct> No, Yes, Yes, Yes, No, No, No, Yes, Yes, Yes,~
+      $ CoughYN           <fct> Yes, Yes, No, Yes, No, Yes, Yes, Yes, Yes, Ye~
+      $ Sneeze            <fct> No, No, Yes, Yes, No, Yes, No, Yes, No, No, N~
+      $ Fatigue           <fct> Yes, Yes, Yes, Yes, Yes, Yes, Yes, Yes, Yes, ~
+      $ SubjectiveFever   <fct> Yes, Yes, Yes, Yes, Yes, Yes, Yes, Yes, Yes, ~
+      $ Headache          <fct> Yes, Yes, Yes, Yes, Yes, Yes, No, Yes, Yes, Y~
+      $ Weakness          <fct> Mild, Severe, Severe, Severe, Moderate, Moder~
+      $ WeaknessYN        <fct> Yes, Yes, Yes, Yes, Yes, Yes, Yes, Yes, Yes, ~
+      $ CoughIntensity    <fct> Severe, Severe, Mild, Moderate, None, Moderat~
+      $ CoughYN2          <fct> Yes, Yes, Yes, Yes, No, Yes, Yes, Yes, Yes, Y~
+      $ Myalgia           <fct> Mild, Severe, Severe, Severe, Mild, Moderate,~
+      $ MyalgiaYN         <fct> Yes, Yes, Yes, Yes, Yes, Yes, Yes, Yes, Yes, ~
+      $ RunnyNose         <fct> No, No, Yes, Yes, No, No, Yes, Yes, Yes, Yes,~
+      $ AbPain            <fct> No, No, Yes, No, No, No, No, No, No, No, Yes,~
+      $ ChestPain         <fct> No, No, Yes, No, No, Yes, Yes, No, No, No, No~
+      $ Diarrhea          <fct> No, No, No, No, No, Yes, No, No, No, No, No, ~
+      $ EyePn             <fct> No, No, No, No, Yes, No, No, No, No, No, Yes,~
+      $ Insomnia          <fct> No, No, Yes, Yes, Yes, No, No, Yes, Yes, Yes,~
+      $ ItchyEye          <fct> No, No, No, No, No, No, No, No, No, No, No, N~
+      $ Nausea            <fct> No, No, Yes, Yes, Yes, Yes, No, No, Yes, Yes,~
+      $ EarPn             <fct> No, Yes, No, Yes, No, No, No, No, No, No, No,~
+      $ Hearing           <fct> No, Yes, No, No, No, No, No, No, No, No, No, ~
+      $ Pharyngitis       <fct> Yes, Yes, Yes, Yes, Yes, Yes, Yes, No, No, No~
+      $ Breathless        <fct> No, No, Yes, No, No, Yes, No, No, No, Yes, No~
+      $ ToothPn           <fct> No, No, Yes, No, No, No, No, No, Yes, No, No,~
+      $ Vision            <fct> No, No, No, No, No, No, No, No, No, No, No, N~
+      $ Vomit             <fct> No, No, No, No, No, No, Yes, No, No, No, Yes,~
+      $ Wheeze            <fct> No, No, No, Yes, No, Yes, No, No, No, No, No,~
+      $ BodyTemp          <dbl> 98.3, 100.4, 100.8, 98.8, 100.5, 98.4, 102.5,~
+      $ RapidFluA         <fct> Presumptive Negative For Influenza A, NA, Pre~
+      $ RapidFluB         <fct> Presumptive Negative For Influenza B, NA, Pre~
+      $ PCRFluA           <fct> NA, NA, NA, NA, NA, NA,  Influenza A Not Dete~
+      $ PCRFluB           <fct> NA, NA, NA, NA, NA, NA,  Influenza B Not Dete~
+      $ TransScore1       <dbl> 1, 3, 4, 5, 0, 2, 2, 5, 4, 4, 2, 3, 2, 5, 3, ~
+      $ TransScore1F      <fct> 1, 3, 4, 5, 0, 2, 2, 5, 4, 4, 2, 3, 2, 5, 3, ~
+      $ TransScore2       <dbl> 1, 2, 3, 4, 0, 2, 2, 4, 3, 3, 1, 2, 2, 4, 2, ~
+      $ TransScore2F      <fct> 1, 2, 3, 4, 0, 2, 2, 4, 3, 3, 1, 2, 2, 4, 2, ~
+      $ TransScore3       <dbl> 1, 1, 2, 3, 0, 2, 2, 3, 2, 2, 0, 1, 1, 3, 1, ~
+      $ TransScore3F      <fct> 1, 1, 2, 3, 0, 2, 2, 3, 2, 2, 0, 1, 1, 3, 1, ~
+      $ TransScore4       <dbl> 0, 2, 4, 4, 0, 1, 1, 4, 3, 3, 2, 2, 2, 4, 3, ~
+      $ TransScore4F      <fct> 0, 2, 4, 4, 0, 1, 1, 4, 3, 3, 2, 2, 2, 4, 3, ~
+      $ ImpactScore       <int> 7, 8, 14, 12, 11, 12, 8, 7, 10, 7, 13, 17, 11~
+      $ ImpactScore2      <int> 6, 7, 13, 11, 10, 11, 7, 6, 9, 6, 12, 16, 10,~
+      $ ImpactScore3      <int> 3, 4, 9, 7, 6, 7, 3, 3, 6, 4, 7, 11, 6, 8, 4,~
+      $ ImpactScoreF      <fct> 7, 8, 14, 12, 11, 12, 8, 7, 10, 7, 13, 17, 11~
+      $ ImpactScore2F     <fct> 6, 7, 13, 11, 10, 11, 7, 6, 9, 6, 12, 16, 10,~
+      $ ImpactScore3F     <fct> 3, 4, 9, 7, 6, 7, 3, 3, 6, 4, 7, 11, 6, 8, 4,~
+      $ ImpactScoreFD     <fct> 7, 8, 14, 12, 11, 12, 8, 7, 10, 7, 13, 17, 11~
+      $ TotalSymp1        <dbl> 8, 11, 18, 17, 11, 14, 10, 12, 14, 11, 15, 20~
+      $ TotalSymp1F       <fct> 8, 11, 18, 17, 11, 14, 10, 12, 14, 11, 15, 20~
+      $ TotalSymp2        <dbl> 8, 10, 17, 16, 11, 14, 10, 11, 13, 10, 14, 19~
+      $ TotalSymp3        <dbl> 8, 9, 16, 15, 11, 14, 10, 10, 12, 9, 13, 18, ~
+  processed columns (SympActAny_new -> processed_data:
+    [1] "SwollenLymphNodes" "ChestCongestion"   "ChillsSweats"     
+    [4] "NasalCongestion"   "CoughYN"           "Sneeze"           
+    [7] "Fatigue"           "SubjectiveFever"   "Headache"         
+    [10] "Weakness"          "WeaknessYN"        "CoughIntensity"   
+    [13] "CoughYN2"          "Myalgia"           "MyalgiaYN"        
+    [16] "RunnyNose"         "AbPain"            "ChestPain"        
+    [19] "Diarrhea"          "EyePn"             "Insomnia"         
+    [22] "ItchyEye"          "Nausea"            "EarPn"            
+    [25] "Hearing"           "Pharyngitis"       "Breathless"       
+    [28] "ToothPn"           "Vision"            "Vomit"            
+    [31] "Wheeze"            "BodyTemp"         
+  More info:
+    Rows: 730
+    Columns: 32
+      $ SwollenLymphNodes <fct> Yes, Yes, Yes, Yes, Yes, No, No, No, Yes, No,~
+      $ ChestCongestion   <fct> No, Yes, Yes, Yes, No, No, No, Yes, Yes, Yes,~
+      $ ChillsSweats      <fct> No, No, Yes, Yes, Yes, Yes, Yes, Yes, Yes, No~
+      $ NasalCongestion   <fct> No, Yes, Yes, Yes, No, No, No, Yes, Yes, Yes,~
+      $ CoughYN           <fct> Yes, Yes, No, Yes, No, Yes, Yes, Yes, Yes, Ye~
+      $ Sneeze            <fct> No, No, Yes, Yes, No, Yes, No, Yes, No, No, N~
+      $ Fatigue           <fct> Yes, Yes, Yes, Yes, Yes, Yes, Yes, Yes, Yes, ~
+      $ SubjectiveFever   <fct> Yes, Yes, Yes, Yes, Yes, Yes, Yes, Yes, Yes, ~
+      $ Headache          <fct> Yes, Yes, Yes, Yes, Yes, Yes, No, Yes, Yes, Y~
+      $ Weakness          <fct> Mild, Severe, Severe, Severe, Moderate, Moder~
+      $ WeaknessYN        <fct> Yes, Yes, Yes, Yes, Yes, Yes, Yes, Yes, Yes, ~
+      $ CoughIntensity    <fct> Severe, Severe, Mild, Moderate, None, Moderat~
+      $ CoughYN2          <fct> Yes, Yes, Yes, Yes, No, Yes, Yes, Yes, Yes, Y~
+      $ Myalgia           <fct> Mild, Severe, Severe, Severe, Mild, Moderate,~
+      $ MyalgiaYN         <fct> Yes, Yes, Yes, Yes, Yes, Yes, Yes, Yes, Yes, ~
+      $ RunnyNose         <fct> No, No, Yes, Yes, No, No, Yes, Yes, Yes, Yes,~
+      $ AbPain            <fct> No, No, Yes, No, No, No, No, No, No, No, Yes,~
+      $ ChestPain         <fct> No, No, Yes, No, No, Yes, Yes, No, No, No, No~
+      $ Diarrhea          <fct> No, No, No, No, No, Yes, No, No, No, No, No, ~
+      $ EyePn             <fct> No, No, No, No, Yes, No, No, No, No, No, Yes,~
+      $ Insomnia          <fct> No, No, Yes, Yes, Yes, No, No, Yes, Yes, Yes,~
+      $ ItchyEye          <fct> No, No, No, No, No, No, No, No, No, No, No, N~
+      $ Nausea            <fct> No, No, Yes, Yes, Yes, Yes, No, No, Yes, Yes,~
+      $ EarPn             <fct> No, Yes, No, Yes, No, No, No, No, No, No, No,~
+      $ Hearing           <fct> No, Yes, No, No, No, No, No, No, No, No, No, ~
+      $ Pharyngitis       <fct> Yes, Yes, Yes, Yes, Yes, Yes, Yes, No, No, No~
+      $ Breathless        <fct> No, No, Yes, No, No, Yes, No, No, No, Yes, No~
+      $ ToothPn           <fct> No, No, Yes, No, No, No, No, No, Yes, No, No,~
+      $ Vision            <fct> No, No, No, No, No, No, No, No, No, No, No, N~
+      $ Vomit             <fct> No, No, No, No, No, No, Yes, No, No, No, Yes,~
+      $ Wheeze            <fct> No, No, No, Yes, No, Yes, No, No, No, No, No,~
+      $ BodyTemp          <dbl> 98.3, 100.4, 100.8, 98.8, 100.5, 98.4, 102.5,~
+      
+      
+      
+Code Information (code (folder))
+  wrangling.qmd
+    Packages:
+      - tidyverse
+      - here
+    Actions:
+      - Load raw data.
+      - Removed 'Score' 'Total' 'FluA' 'FluB' 'Dxname' 'Activity' as well as          removed 'Unique.Visit' and any NAs.
+      - Save processed data.
+  exploration.qmd
+    Packages:
+      - tidyverse
+      - here
+    Actions:
+      - Load processed data.
+      - Summary of each variable in dataset.
+      - Generate histogram and density plot looking at variable of interest           (BodyTemp).
+      - Generate barplot of variable of interest (Nausea).
+      - Generate boxplots comparing categorical to continuous variables.
+  fitting.qmd
+    Packages:
+      - tidyverse
+      - here
+      - tidymodels
+      - performance
+      - vip
+    Actions:
+      - Load processed data.
+      - Prepare linear model with select engine.
+      - Fitting linear model(s).
+      - Check/compare linear model(s) performance.
+      - Prepare logistic model with select engine.
+      - Fitting logistic model(s).
+      - Check/compare logistic model(s) performance.
+      
+  
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
