@@ -1,0 +1,118 @@
+---
+title: "Model Evaluation"
+author: "Connor Ross"
+editor: visual
+---
+
+# Model Evaluation 
+
+## Splitting the Data
+```{r}
+## Load packages
+library(tidyverse)
+library(tidymodels)
+
+## Splitting the wrangled dataset.
+glimpse(SympActAny_new)
+
+
+## For reproducibility
+set.seed(1)
+
+## Put 3/4 of the data into training set
+data_split <- initial_split(SympActAny_new, prop = 3/4)
+
+## Create data frame for two sets
+train_data <- training(data_split)
+test_data <- testing(data_split)
+
+## New recipe
+new_flu <- recipe(Nausea ~ ., data = train_data)
+
+
+
+## Set engine/regression model
+lr_mod <- logistic_reg() %>%
+  set_engine("glm")
+
+
+## Create workflow
+flu_wflow <- workflow() %>%
+  add_model(lr_mod) %>%
+  add_recipe(new_flu)
+
+flu_wflow
+
+
+## Fit train data
+flu_fit <- flu_wflow %>%
+  fit(data = train_data)
+
+flu_fit %>%
+  extract_fit_parsnip() %>%
+  tidy()
+
+
+## Predict
+predict(flu_fit, test_data)
+
+
+## Augment
+flu_aug <- augment(flu_fit, test_data)
+
+flu_aug %>%
+  select(Nausea, .pred_No, .pred_Yes)
+
+## ROC curve
+flu_aug %>%
+  roc_curve(Nausea, .pred_No) %>%
+  autoplot()
+
+
+flu_aug %>%
+  roc_auc(Nausea, .pred_No)
+
+
+
+
+
+# RUNNY NOSE
+new_flu_rn <- recipe(Nausea ~ RunnyNose, data = train_data)
+
+
+## Create workflow
+flu_wflow2 <- workflow() %>%
+  add_model(lr_mod) %>%
+  add_recipe(new_flu_rn)
+
+flu_wflow2
+
+
+## Fit train data
+flu_fit_rn <- flu_wflow2 %>%
+  fit(data = train_data)
+
+flu_fit_rn %>%
+  extract_fit_parsnip() %>%
+  tidy()
+
+
+## Predict
+predict(flu_fit_rn, test_data)
+
+
+## Augment
+flu_aug_rn <- augment(flu_fit_rn, test_data)
+
+flu_aug_rn %>%
+  select(Nausea, .pred_No, .pred_Yes)
+
+## ROC curve
+flu_aug_rn %>%
+  roc_curve(Nausea, .pred_No) %>%
+  autoplot()
+
+
+flu_aug_rn %>%
+  roc_auc(Nausea, .pred_No)
+```

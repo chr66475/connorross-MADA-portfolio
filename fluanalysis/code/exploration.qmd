@@ -5,9 +5,9 @@ format:
     theme: darkly
 ---
 
+# Data Exploration
+
 ## EDA Revisited
-
-
 
 ```{r}
 # Summary of Each Variable
