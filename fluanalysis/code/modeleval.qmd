@@ -13,9 +13,9 @@ editor: visual
 library(tidyverse)
 library(tidymodels)
 ### Pathing(?)
-### library(here)
-# wrangled_data_location <- here("fluanalysis", "data", "processed_data", "SympActAny_new.rds")
-# SympActAny_new <- readRDS(wrangled_data_location)
+library(here)
+wrangled_data_location <- here("fluanalysis", "data", "processed_data", "SympActAny_new.rds")
+SympActAny_new <- readRDS(wrangled_data_location)
 
 ## Splitting the wrangled dataset.
 glimpse(SympActAny_new)
