@@ -26,7 +26,7 @@ website:
             href: ./fluanalysis/code/exploration.html
           - text: "Fitting"
             href: ./fluanalysis/code/fitting.html
-          - text: "Evaluation"
+          - text: "Model Evaluation"
             href: ./fluanalysis/code/modeleval.html
     right:
       - icon: github 
