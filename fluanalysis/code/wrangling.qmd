@@ -13,6 +13,7 @@ format:
 setwd("../")
 library(tidyverse)
 library(here)
+library(tidymodels)
 
 
 # There were issues with importing the data file without the full path even after resetting my workingdirectory. Issue documented in '#I_have_a_question_or_need_help' Channel in course Slack on 02/28/2023 (see Kailin Chen thread)
@@ -110,12 +111,31 @@ SympActAny_new <- SympActAny_new %>%
 
 # Let's try this again...
 ## Recipe Creation
-categorical_recipe <- recipe(~ . , data = SympActAny_new)
+categorical_recipe <- recipe(~ SwollenLymphNodes + ChestCongestion + ChillsSweats + NasalCongestion + Sneeze + Fatigue + SubjectiveFever + Headache + RunnyNose + AbPain + ChestPain + Diarrhea + EyePn + Insomnia + ItchyEye + Nausea + EarPn + Pharyngitis + Breathless + ToothPn + Vomit + Wheeze, data = SympActAny_new)
 
 categorical_dummies <- categorical_recipe %>%
-  step_dummy()
+  step_dummy(all_predictors()) %>%
+  prep(training = SympActAny_new)
 
 
+categorical_dummies_data <- bake(categorical_dummies, new_data = NULL)
+
+
+## Recipe Creation
+Ord_levels <- c("None", "Mild", "Moderate", "Severe")
+
+SympActAny_new <- SympActAny_new %>%
+  mutate(Weakness = ordered(Weakness),
+         CoughIntensity = ordered(CoughIntensity),
+         Myalgia = ordered(Myalgia))
+
+Ord_recipe <- recipe(~ Weakness + CoughIntensity + Myalgia, data = SympActAny_new)
+
+Ord_dummies <- Ord_recipe %>%
+  step_ordinalscore(all_predictors()) %>%
+  prep(training = SympActAny_new)
+
+Ord_dummies_data <- bake(Ord_dummies, new_data = NULL)
 
 ## Low ("near-zero") variance predictors
 xtabs(~ Vision + Hearing, data = SympActAny_new)

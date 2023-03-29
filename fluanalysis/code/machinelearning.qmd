@@ -7,10 +7,362 @@ author: "Connor Ross"
 
 ## Data Setup
 ```{r}
+
+## Load packages
+library(tidyverse)
+library(tidymodels)
+library(rpart)
+library(glmnet)
+library(ranger)
+library(vip)
+
+### Pathing(?)
+library(here)
+wrangled_data_location <- here("fluanalysis", "data", "processed_data", "SympActAny_new.rds")
+SympActAny_new <- readRDS(wrangled_data_location)
+
 # Set Seed to 123
 set.seed(123)
 
+split <- initial_split(SympActAny_new, prop = 7/10, strata = BodyTemp)
+
+flu_train1 <- training(split)
+flu_test1 <- testing(split)
+
+# Train
+
+# 5 Fold CV
+folds <- vfold_cv(flu_train1, v = 5, strata = BodyTemp)
+folds
+
+# Recipe
+flu_rec1 <- recipe(BodyTemp ~ ., data = flu_train1) %>%
+  step_dummy(all_predictors()) %>%
+  prep(training = flu_train1)
+
+flu_rec1 <- bake(flu_rec1, new_data = NULL)
 
 
+# Null Model Performance
+## Create
+null_mod1 <- null_model() %>%
+  set_engine("parsnip") %>%
+  set_mode("regression")
+
+## Cooking off the Recipe
+null_recipe <- recipe(BodyTemp ~., data = flu_rec1)
+
+null_workflow <- workflow() %>%
+  add_model(null_mod1) %>%
+  add_recipe(null_recipe)
+
+extract_parameter_set_dials(null_workflow)
+
+## RMSE
+fit_null1 <- null_workflow %>%
+  fit(data = flu_rec1)
+
+## Check the fit
+fit_null1 %>%
+  extract_fit_parsnip() %>%
+  tidy()
+
+aug_null <- augment(fit_null1, flu_rec1)
+
+aug_null %>%
+  select(BodyTemp, .pred) %>%
+  rmse(BodyTemp, .pred)
+
+# Test
+
+# 5 Fold CV
+folds2 <- vfold_cv(flu_test1, v = 5, strata = BodyTemp)
+folds2
+
+# Recipe
+flu_rec2 <- recipe(BodyTemp ~ ., data = flu_test1) %>%
+  step_dummy(all_predictors()) %>%
+  prep(training = flu_test1)
+
+flu_rec2 <- bake(flu_rec2, new_data = NULL)
+
+
+# Null Model Performance
+## Create
+null_mod2 <- null_model() %>%
+  set_engine("parsnip") %>%
+  set_mode("regression")
+
+## Cooking off the Recipe
+null_recipe2 <- recipe(BodyTemp ~., data = flu_rec2)
+
+null_workflow2 <- workflow() %>%
+  add_model(null_mod2) %>%
+  add_recipe(null_recipe2)
+
+extract_parameter_set_dials(null_workflow2)
+
+## RMSE
+fit_null2 <- null_workflow %>%
+  fit(data = flu_rec2)
+
+## Check the fit
+fit_null2 %>%
+  extract_fit_parsnip() %>%
+  tidy()
+
+aug_null2 <- augment(fit_null2, flu_rec2)
+
+aug_null2 %>%
+  select(BodyTemp, .pred) %>%
+  rmse(BodyTemp, .pred)
+
+
+
+```
+
+# Tree
+
+## Model Specification
+```{r}
+tune_spec <- decision_tree(cost_complexity = tune(),
+                           tree_depth = tune()) %>%
+  set_engine("rpart") %>%
+  set_mode("regression")
+tune_spec
+
+tree_grid <- grid_regular(cost_complexity(),
+                          tree_depth(),
+                          levels = 5)
+tree_grid
+tree_grid %>%
+  count(tree_depth)
+```
+
+
+## Workflow Definition
+```{r}
+
+tree_wf <- workflow() %>%
+  add_model(tune_spec) %>%
+  add_formula(BodyTemp ~ .)
+
+
+```
+
+## Tuning Grid Specification
+```{r}
+set.seed(234)
+tree_folds <- vfold_cv(flu_train1)
+
+tree_res <- tree_wf %>%
+  tune_grid(
+    resamples = tree_folds,
+    grid = tree_grid
+  )
+
+tree_res
+
+tree_res %>%
+  collect_metrics()
+
+#Why is this failing? Error: All models failed
+
+```
+
+## Tuning using Cross-Validation and Tune_grid()
+```{r}
+tree_res %>%
+  show_best(metric = "rmse")
+
+best_tree <- tree_res %>%
+  select_best(metric = "rmse")
+best_tree
+
+```
+
+
+
+# LASSO
+
+## Model Specification
+```{r}
+set.seed(234)
+val_set <- validation_split(SympActAny_new, strata = BodyTemp, prop = 0.70)
+
+lr_mod <- linear_reg(penalty = tune(), mixture = 1) %>%
+  set_engine("glmnet") 
+
+lr_recipe <- recipe(BodyTemp ~ ., data = flu_train1) %>%
+  step_dummy(all_nominal_predictors()) %>%
+  step_zv(all_predictors()) %>%
+  step_normalize(all_predictors())
+
+```
+
+
+## Workflow Definition
+```{r}
+
+lr_workflow <- workflow() %>%
+  add_model(lr_mod) %>%
+  add_recipe(lr_recipe)
+
+```
+
+
+## Tuning Grid Specification
+```{r}
+
+lr_reg_grid <- tibble(penalty = 30^seq(-40, -1, length.out = 30))
+
+lr_reg_grid %>% top_n(-5)
+
+lr_reg_grid %>% top_n(5)
+
+```
+
+
+## Tuning Using Cross-Validation and tune_grid
+```{r}
+
+lr_res <- lr_workflow %>%
+  tune_grid(val_set,
+            grid = lr_reg_grid,
+            control = control_grid(save_pred = TRUE),
+            metrics = metric_set(rmse))
+lr_plot <- lr_res %>%
+  collect_metrics() %>%
+  ggplot(aes(x = penalty, y = mean)) +
+  geom_point() +
+  geom_line() +
+  ylab("RMSE") +
+  scale_x_log10(labels = scales::label_number())
+lr_plot
+
+top_models <-
+  lr_res %>%
+  show_best("rmse", n = 15) %>%
+  arrange(penalty)
+top_models
+
+lr_best <- 
+  lr_res %>%
+  collect_metrics() %>%
+  arrange(penalty) %>%
+  slice(12)
+
+lr_rmse <-
+  lr_res %>%
+  collect_predictions(parameters = lr_best) %>%
+  rmse(BodyTemp, .pred) %>%
+  mutate(model = "Linear Regression")
+
+```
+
+
+
+# Forrest
+
+## Model Specification
+```{r}
+
+cores <- parallel::detectCores()
+cores
+
+rf_mod <-
+  rand_forest(mtry = tune(), min_n = tune(), trees = 1000) %>%
+  set_engine("ranger", num.threads = cores) %>%
+  set_mode("regression")
+
+rf_recipe <- 
+  recipe(BodyTemp ~ . , data = flu_train1) %>%
+  step_dummy(all_predictors()) %>%
+  prep(training = flu_train1)
+
+
+```
+
+
+## Workflow Definition
+```{r}
+
+rf_workflow <-
+  workflow() %>%
+  add_model(rf_mod) %>%
+  add_recipe(rf_recipe)
+
+```
+
+
+## Tuning Grid Specification
+```{r}
+rf_mod
+
+extract_parameter_set_dials(rf_mod)
+
+
+set.seed(345)
+rf_res <- rf_workflow %>%
+  tune_grid(val_set,
+            grid = 25,
+            control = control_grid(save_pred = TRUE),
+            metrics = metric_set(rmse))
+
+```
+
+
+## Tuning Using Cross-Validation and the Tune_Grid()
+```{r}
+
+rf_res %>%
+  show_best(metric = "rmse")
+
+autoplot(rf_res)
+
+rf_best <-
+  rf_res %>%
+  select_best(metric = "rmse")
+rf_best
+
+rf_res %>%
+  collect_predictions()
+
+rf_rmse <- 
+  rf_res %>%
+  collect_predictions(parameters = rf_best) %>%
+  rmse(BodyTemp, .pred) %>%
+  mutate(model = "Random Forest")
+
+
+
+# Last Mod
+
+last_rf_mod <-
+  rand_forest(mtry = 8, min_n = 7, trees = 1000) %>%
+  set_engine("ranger", num.threads = cores, importance = "impurity") %>%
+  set_mode("regression")
+
+last_rf_workflow <-
+  rf_workflow %>%
+  update_model(last_rf_mod)
+
+set.seed(345)
+last_rf_fit <-
+  last_rf_workflow %>%
+  last_fit(split)
+
+last_rf_fit
+
+last_rf_fit %>%
+  collect_metrics()
+
+last_rf_fit %>%
+  extract_fit_parsnip() %>%
+  vip::vip(num_features = 20)
+
+for_plot <- last_rf_fit %>%
+  collect_predictions() %>%
+  rmse(BodyTemp, .pred) 
 
 ```
