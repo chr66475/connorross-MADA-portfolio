@@ -83,8 +83,9 @@ Graph_BOX_BTvCS
 Graph_BOX_BTvNC <- BOXfun(NasalCongestion)
 Graph_BOX_BTvNC
 
-Graph_BOX_BTvC <- BOXfun(CoughYN)
-Graph_BOX_BTvC
+#Graph_BOX_BTvC <- BOXfun(CoughYN)
+#Graph_BOX_BTvC
+# Removed after Module 11 assessment 
 
 Graph_BOX_BTvS <- BOXfun(Sneeze)
 Graph_BOX_BTvS
@@ -132,8 +133,9 @@ Graph_BOX_BTvNa
 Graph_BOX_BTvEarpn <- BOXfun(EarPn)
 Graph_BOX_BTvEarpn
 
-Graph_BOX_BTvHear<- BOXfun(Hearing)
-Graph_BOX_BTvHear
+#Graph_BOX_BTvHear<- BOXfun(Hearing)
+#Graph_BOX_BTvHear
+# Removed after module 11
 
 Graph_BOX_BTvPHAR <- BOXfun(Pharyngitis)
 Graph_BOX_BTvPHAR
@@ -144,8 +146,9 @@ Graph_BOX_BTvBREA
 Graph_BOX_BTvTooth <- BOXfun(ToothPn)
 Graph_BOX_BTvTooth
 
-Graph_BOX_BTvVis <- BOXfun(Vision)
-Graph_BOX_BTvVis
+#Graph_BOX_BTvVis <- BOXfun(Vision)
+#Graph_BOX_BTvVis
+# Removed after module 11
 
 Graph_BOX_BTvVom <- BOXfun(Vomit)
 Graph_BOX_BTvVom

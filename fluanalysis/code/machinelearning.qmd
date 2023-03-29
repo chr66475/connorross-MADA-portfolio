@@ -1,0 +1,16 @@
+---
+title: "Machine Learning"
+author: "Connor Ross"
+---
+
+# Analysis Code
+
+## Data Setup
+```{r}
+# Set Seed to 123
+set.seed(123)
+
+
+
+
+```

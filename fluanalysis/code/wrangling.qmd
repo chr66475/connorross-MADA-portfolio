@@ -5,7 +5,7 @@ format:
     theme: darkly
 ---
 
-# Importing and Wrangling Data
+# Importing and Wrangling Data (Pre-Processing)
 
 ## Loading Packages and Raw Data
 ```{r}
@@ -51,12 +51,87 @@ nrow(SympActAny_new)
 
 ### 730 obs of 32 variables resulting
 
-# Save cleaned set 
-saveRDS(SympActAny_new, file = "../data/processed_data/SympActAny_new.rds")
+
 
 ```
 
+# Pre-processing for Module 11
+```{r}
+# This was added to satisfy the module 11 additional cleaning/processing prequirements. For clarity, I've added this additional section in this document, rather than implementing it into the existing code chunks.
 
+## Feature/Variable Removal (Weakness, Cough (2x), Myalgia - Yes/No)
+
+SympActAny_new <- SympActAny_new %>%
+  select(-c(WeaknessYN, CoughYN, CoughYN2, MyalgiaYN))
+
+
+
+
+## Categorical/Ordinal predictors (Practice)
+
+
+#
+
+#severity <- c("None", "Mild", "Moderate", "Severe")
+
+#ord_data <- data.frame(sev = c("Weakness", "CoughIntensity", "Myalgia"),
+#                           Symp_Sev = factor(severity, levels = severity, #ordered = TRUE))
+
+#model.matrix(~Symp_Sev, data = ord_data)
+
+#linear_values <- recipe(~ sev + Symp_Sev, data = ord_data) %>%
+#  step_dummy(sev) %>%
+#  step_ordinalscore(Symp_Sev)
+
+#linear_values <- prep(linear_values, training = ord_data)
+#bake(linear_values, new_data = NULL, everything())
+
+#custom <- function(x) {
+#  new_values <- c (0, 1, 2, 3)
+#  new_values[as.numeric(x)]
+#}
+
+#nonlin_scores <- recipe(~ sev + Symp_Sev, data = ord_data) %>%
+#  step_dummy(sev) %>%
+#  step_ordinalscore(Symp_Sev, covert = custom)
+
+#tidy(nonlin_scores, number = 2) # Why 2? I have no idea. help file doesn't explain these steps at all.
+
+#nonlin_scores <- prep(nonlin_scores, training = ord_data)
+#bake(nonlin_scores, new_data = NULL, everything())
+#tidy(nonlin_scores, number = 2)
+#}
+
+# Couldn't get the code above to run. Getting the error: "Error in data.frame(sev = c("Weakness", "CoughIntensity", "Myalgia"),  : arguments imply differing number of rows: 3, 4" on LINE 72.
+# Checked all three, all have same length, unique outcomes (used length() function. used unique() function).
+
+
+#
+
+# Let's try this again...
+## Recipe Creation
+categorical_recipe <- recipe(~ . , data = SympActAny_new)
+
+categorical_dummies <- categorical_recipe %>%
+  step_dummy()
+
+
+
+## Low ("near-zero") variance predictors
+xtabs(~ Vision + Hearing, data = SympActAny_new)
+
+### Less than 50 observations where Hearing and Vision == "Yes"
+
+SympActAny_new <- SympActAny_new %>%
+  select(-c(Vision, Hearing))
+
+
+
+
+
+# Save cleaned set 
+saveRDS(SympActAny_new, file = "../data/processed_data/SympActAny_new.rds")
+```
 
 
 
