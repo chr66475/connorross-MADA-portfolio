@@ -5,12 +5,58 @@ output:
     toc: FALSE
 ---
 
-
-To be fillled...
+## Load Packages.
+Load packages.
 ```{r}
-# To be completed...
+library(tidyverse)
+library(tidytuesdayR)
 
 ```
+
+
+# 1. Load, wrangle and explore.
+
+
+Load the data.
+```{r}
+
+eggproduction  <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2023/2023-04-11/egg-production.csv')
+cagefreepercentages <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2023/2023-04-11/cage-free-percentages.csv')
+
+```
+
+
+View the data.
+```{r}
+glimpse(eggproduction)
+glimpse(cagefreepercentages)
+
+summary(eggproduction)
+summary(cagefreepercentages)
+
+```
+
+
+
+
+# 2. Formulate questions/hypothesis.
+
+Number of hens effects the number of eggs produced.
+
+Production process effects the number of eggs produced.
+
+Time of year (months) effects the number of eggs produced.
+
+
+
+
+# 3. Pre-processing. Split into train/test.
+```{r}
+
+
+
+```
+
 
 
 
