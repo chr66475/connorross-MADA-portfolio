@@ -9,7 +9,12 @@ output:
 Load packages.
 ```{r}
 library(tidyverse)
-library(tidytuesdayR)
+library(tidymodels)
+library(rpart)
+library(glmnet)
+library(ranger)
+library(vip)
+
 
 ```
 
@@ -48,22 +53,300 @@ Production process effects the number of eggs produced.
 Time of year (months) effects the number of eggs produced.
 
 
+Outcome of interest: Number of eggs produced.
+Predictor(s) of interest: Number of hens, production process.
 
 
 # 3. Pre-processing. Split into train/test.
 ```{r}
+# Get rid of columns we don't need.
+
+eggproduction <- eggproduction %>%
+  select(!c(source, observed_month))
+
+eggproduction$prod_process <- as.factor(eggproduction$prod_process)
+eggproduction$prod_type <- as.factor(eggproduction$prod_type)
+
+levels(eggproduction$prod_process)
+
+eggproduction$prod_process <- factor(eggproduction$prod_process, levels = c('cage-free (non-organic)', 'cage-free (organic)', 'all'), ordered = TRUE)
+
+eggproduction$prod_type <- factor(eggproduction$prod_type, levels = c('hatching eggs', 'table eggs'), ordered = TRUE)
+
+# Set the seed.
+set.seed(123)
+
+# Split
+split <- initial_split(eggproduction, prop = 7/10, strata = n_eggs)
+
+egg_train <- training(split)
+egg_test <- testing(split)
+
+folds <- vfold_cv(egg_train, v = 2, repeats = 2, strata = n_eggs)
+folds
+
+egg_rec <- recipe(n_eggs ~ ., data = eggproduction) %>%
+  step_dummy(prod_type) %>%
+  step_ordinalscore(prod_process) %>%
+  prep(training = egg_train)
+
+egg_rec <- bake(egg_rec, new_data = NULL)
+```
+
+
+#4 Fit 4 models
+
+## Null Model
+
+```{r}
+
+null_mod <- null_model() %>%
+  set_engine("parsnip") %>%
+  set_mode("regression")
+
+null_recipe <- recipe(n_eggs ~ 1, data = egg_train)
+
+null_workflow <- workflow() %>%
+  add_model(null_mod) %>%
+  add_recipe(null_recipe)
+
+null_fit <- fit_resamples(null_workflow, resamples = folds)
+
+null_fit %>%
+  collect_metrics()
 
 
 
 ```
 
+## Tree
+
+```{r}
+tune_spec <- decision_tree(cost_complexity = tune(),
+                           tree_depth = tune()) %>%
+  set_engine("rpart") %>%
+  set_mode("regression")
+tune_spec
+
+tree_grid <- grid_regular(cost_complexity(),
+                          tree_depth(),
+                          levels = 5)
+tree_grid
+
+tree_grid %>%
+  count(tree_depth)
+
+tree_wf <- workflow() %>%
+  add_model(tune_spec) %>%
+  add_formula(n_eggs ~ .)
 
 
+set.seed(234)
+tree_folds <- vfold_cv(egg_train)
+
+tree_res <- tree_wf %>%
+  tune_grid(
+    resamples = tree_folds,
+    grid = tree_grid
+  )
+
+tree_res
+
+tree_res %>%
+  collect_metrics()
+
+tree_res %>%
+  show_best(metric = "rmse")
+
+best_tree <- tree_res %>%
+  select_best(metric = "rmse")
+best_tree
+
+tree_res %>%
+  autoplot()
+
+```
+
+## LASSO
+```{r}
+
+lr_mod <- linear_reg(penalty = tune(),
+                     mixture = 1) %>%
+  set_engine("glmnet")
+
+lr_workflow <- workflow() %>%
+  add_model(lr_mod) %>%
+  add_formula(n_eggs ~ .)
+
+lr_reg_grid <- tibble(penalty = 10^seq(-4, -1, length.out = 30))
+lr_reg_grid %>% top_n(-5)
+lr_reg_grid %>% top_n(5)
+
+lr_res <- lr_workflow %>%
+  tune_grid(resamples = folds,
+            grid = lr_reg_grid,
+            control = control_grid(verbose = FALSE, save_pred = TRUE),
+            metrics = metric_set(rmse))
+lr_res %>%
+  collect_metrics()
+
+lr_res %>%
+  autoplot()
+
+lr_res %>%
+  show_best(metric = "rmse")
+
+best_lr <- lr_res %>%
+  select_best(metric = "rmse")
+best_lr
 
 
+final_lr_workflow <- lr_workflow %>%
+  finalize_workflow(best_lr)
+
+final_lr_fit <- final_lr_workflow %>%
+  fit(data = egg_train)
+final_lr_fit
+
+x <- final_lr_fit$fit$fit$fit
+plot(x, "lambda")
+
+```
 
 
+## Random Forrest
+```{r}
+
+cores <- parallel::detectCores()
+cores
+
+rf_mod <- rand_forest(mtry = tune(), min_n = tune(), trees = 1000) %>%
+  set_engine("ranger", num.threads = cores) %>%
+  set_mode("regression")
+
+rf_recipe <- recipe(n_eggs ~ ., data = egg_train) %>%
+  step_dummy(prod_type) %>%
+  step_ordinalscore(prod_process) %>%
+  prep(training = egg_train)
+
+rf_workflow <- workflow() %>%
+  add_model(rf_mod) %>%
+  add_recipe(rf_recipe)
+
+rf_mod
+
+extract_parameter_set_dials(rf_mod)
+
+rf_res <- rf_workflow %>%
+  tune_grid(resamples = folds,
+            grid = 25,
+            control = control_grid(save_pred = TRUE),
+            metrics = metric_set(rmse))
+
+rf_res %>%
+  collect_metrics()
+
+rf_res %>%
+  autoplot()
 
 
+rf_res %>%
+  show_best(metric = "rmse")
+
+best_rf <- rf_res %>%
+  select_best(metric = "rmse")
+best_rf
 
 
+final_rf_workflow <- rf_workflow %>%
+  finalize_workflow(best_rf)
+
+final_rf_fit <- final_rf_workflow %>%
+  fit(data = egg_train)
+final_rf_fit
+
+
+```
+
+## Poisson
+```{r}
+
+p_mod <- poisson_reg(penalty = tune(),
+                     mixture = 1, mode = "regression") %>%
+  set_engine("glmnet")
+
+p_workflow <- workflow() %>%
+  add_model(lr_mod) %>%
+  add_formula(n_eggs ~ .)
+
+p_reg_grid <- tibble(penalty = 10^seq(-4, -1, length.out = 30))
+p_reg_grid %>% top_n(-5)
+p_reg_grid %>% top_n(5)
+
+p_res <- p_workflow %>%
+  tune_grid(resamples = folds,
+            grid = p_reg_grid,
+            control = control_grid(verbose = FALSE, save_pred = TRUE),
+            metrics = metric_set(rmse))
+p_res %>%
+  collect_metrics()
+
+p_res %>%
+  autoplot()
+
+p_res %>%
+  show_best(metric = "rmse")
+
+best_p <- p_res %>%
+  select_best(metric = "rmse")
+best_p
+
+
+final_p_workflow <- p_workflow %>%
+  finalize_workflow(best_p)
+
+final_p_fit <- final_p_workflow %>%
+  fit(data = egg_train)
+final_lr_fit
+
+y <- final_p_fit$fit$fit$fit
+plot(y, "lambda")
+
+
+```
+
+
+# 5 Picked Mondel
+```{r}
+#comparing best models to null model to determine which model performed the best
+tree_res %>%
+  show_best(metric = "rmse", n = 1)
+lr_res %>%
+  show_best(metric = "rmse", n = 1)
+rf_res %>%
+  show_best(metric = "rmse", n = 1)
+null_fit %>%
+  collect_metrics(metric = "rmse")
+p_res %>%
+  show_best(metric = "rmse", n = 1)
+```
+
+# 6 Final/with test data
+
+Lasso regression performed the best using the RMSE metric.
+
+```{r}
+
+lr_last_fit <- final_lr_workflow %>%
+  last_fit(split)
+lr_last_fit %>% collect_metrics()
+
+null_fit %>% collect_metrics()
+
+
+```
+The model performed better than the null model. Further it fit the test data better.
+
+# 7 Summary
+
+I first performed a null model so I had a base to compare other models that I create to. I tried to stick with model that I could compare RMSEs for performance. LASSO made the most sense to keep since it had lower RMSE in the 'best model' compared to others. 
